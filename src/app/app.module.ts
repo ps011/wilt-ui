@@ -9,12 +9,14 @@ import { WiltSignupComponent } from './wilt-signup/wilt-signup.component';
 import { WiltHomeComponent } from './wilt-home/wilt-home.component';
 import { WiltPageNotFoundComponent } from './wilt-page-not-found/wilt-page-not-found.component';
 import { WiltLandingComponent } from './wilt-landing/wilt-landing.component';
+import { WiltProfileComponent } from './wilt-profile/wilt-profile.component';
 
 
 const routes: Routes = [
   {path: 'login', component: WiltLoginComponent},
   {path: 'signup', component: WiltSignupComponent},
   {path: 'home', component: WiltHomeComponent},
+  {path: 'profile', component: WiltProfileComponent},
   {path: '', component: WiltLandingComponent},
   {path: '**', component: WiltPageNotFoundComponent}
 ]
@@ -26,7 +28,8 @@ const routes: Routes = [
     WiltSignupComponent,
     WiltHomeComponent,
     WiltPageNotFoundComponent,
-    WiltLandingComponent
+    WiltLandingComponent,
+    WiltProfileComponent
   ],
   imports: [
     BrowserModule,
