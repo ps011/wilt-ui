@@ -1,1 +1,100 @@
-<p>wilt-home works!</p>
+<nav class="navbar navbar-expand-lg bg-primary">
+  <div class="container">
+    <div class="navbar-translate">
+      <a class="navbar-brand" href="#pablo">Primary color</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#example-navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-bar bar1"></span>
+        <span class="navbar-toggler-bar bar2"></span>
+        <span class="navbar-toggler-bar bar3"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="example-navbar-primary" data-nav-image="./assets/img/blurred-image-1.jpg">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#pablo">
+            <i class="now-ui-icons objects_globe"></i>
+            <p>Discover</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile">
+            <i class="now-ui-icons users_circle-08"></i>
+            <p>Profile</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#pablo">
+            <i class="now-ui-icons ui-1_settings-gear-63"></i>
+            <p>Settings</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="row mb-5 mt-5">
+  <div class="input-group col-4 offset-4">
+    <input type="text" class="form-control" placeholder="Search a WIL">
+    <div class="input-group-append">
+      <span class="input-group-text"><i class="now-ui-icons ui-1_zoom-bold"></i></span>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-6" *ngFor="let item of [1,2,3,4,5,6]">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs justify-content-center" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Compact" role="tab" aria-selected="true">
+              <i class="now-ui-icons education_paper"></i>
+              Compact
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Lengthy" role="tab" aria-selected="false">
+              <i class="now-ui-icons education_agenda-bookmark"></i>
+              Lengthy
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Visuals" role="tab" aria-selected="false">
+              <i class="now-ui-icons education_glasses"></i>
+              Visuals
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Author" role="tab" aria-selected="false">
+              <i class="now-ui-icons users_single-02"></i>
+              Author
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <!-- Tab panes -->
+        <div class="tab-content text-center">
+          <div class="tab-pane active" id="Compact" role="tabpanel">
+            <p>What is a pure function in Javascript?</p>
+          </div>
+          <div class="tab-pane" id="Lengthy" role="tabpanel">
+            <p> A pure function must pass two tests, first one is that same input should always return same output and the second one is that there should be no side effects of the function such as DOM Querying, HTTP Calls, Changing the Filesystem etc.</p>
+          </div>
+          <div class="tab-pane" id="Visuals" role="tabpanel">
+            <p>NONE</p>
+          </div>
+          <div class="tab-pane" id="Author" role="tabpanel">
+            <p>
+              Posted by Prasheel Soni on 2019-03-28T10:15:00Z
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
