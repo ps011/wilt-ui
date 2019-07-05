@@ -2,25 +2,25 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
   <div class="container">
-    <div class="dropdown button-dropdown">
-      <a href="#pablo" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
-        <span class="button-bar"></span>
-        <span class="button-bar"></span>
-        <span class="button-bar"></span>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-header">Dropdown header</a>
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">One more separated link</a>
-      </div>
-    </div>
+<!--    <div class="dropdown button-dropdown">-->
+<!--      <a href="#pablo" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">-->
+<!--        <span class="button-bar"></span>-->
+<!--        <span class="button-bar"></span>-->
+<!--        <span class="button-bar"></span>-->
+<!--      </a>-->
+<!--      <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--        <a class="dropdown-header">Dropdown header</a>-->
+<!--        <a class="dropdown-item" href="#">Action</a>-->
+<!--        <a class="dropdown-item" href="#">Another action</a>-->
+<!--        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--        <div class="dropdown-divider"></div>-->
+<!--        <a class="dropdown-item" href="#">Separated link</a>-->
+<!--        <div class="dropdown-divider"></div>-->
+<!--        <a class="dropdown-item" href="#">One more separated link</a>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="navbar-translate">
-      <a class="navbar-brand" href="https://demos.creative-tim.com/now-ui-kit/index.html" rel="tooltip" title="What I Learned Today?" data-placement="bottom" target="_blank">
+      <a class="navbar-brand" routerLink="/" rel="tooltip" title="What I Learned Today?" data-placement="bottom" target="_blank">
         WILT
       </a>
       <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,15 +68,7 @@
       <div class="container">
         <h1 class="title">What I Learned Today?</h1>
         <div class="text-center">
-          <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-            <i class="fab fa-facebook-square"></i>
-          </a>
-          <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#pablo" class="btn btn-primary btn-icon btn-round">
-            <i class="fab fa-google-plus"></i>
-          </a>
+          <a class="btn btn-primary btn-round" routerLink="/login">Get Started</a>
         </div>
       </div>
     </div>
@@ -98,10 +90,10 @@
           <div class="col-md-6">
             <div class="image-container image-left" style="background-image: url('../../assets/img/login.jpg')">
               <!-- First image on the left side -->
-              <p class="blockquote blockquote-primary">"Over the span of the satellite record, Arctic sea ice has been declining significantly, while sea ice in the Antarctichas increased very slightly"
+              <p class="blockquote blockquote-primary">"The method of loci is also known as the mind palace technique. This method is a mnemonic device adopted in ancient Roman and Greek rhetorical treatises."
                 <br>
                 <br>
-                <small>-NOAA</small>
+                <small>-WILT</small>
               </p>
             </div>
             <!-- Second image on the left side of the article -->
@@ -120,6 +112,7 @@
              <p>
                <strong>WILT brings a platform to you and your ideas, leanings and all those one or two liners which you learn, listen, read, encounter during any time of your day</strong>
             </p>
+            <a routerLink="/login" class="btn btn-link btn-primary">Get Started  <i class="now-ui-icons arrows-1_minimal-right"></i></a>
           </div>
         </div>
       </div>
