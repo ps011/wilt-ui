@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row m-2">
   <div class="col-lg-6 col-md-12 col-sm-12" *ngFor="let item of [1,2,3,4,5,6]; let i = index">
     <div class="card">
       <div class="card-header">
@@ -43,10 +43,10 @@
         <!-- Tab panes -->
         <div class="tab-content text-center">
           <div class="tab-pane active" id="compact-{{i}}" role="tabpanel">
-            <p>What is a pure function in Javascript?</p>
+            <h3><b>What is a pure function in Javascript?</b></h3>
           </div>
           <div class="tab-pane" id="lengthy-{{i}}" role="tabpanel">
-            <p> A pure function must pass two tests, first one is that same input should always return same output and the second one is that there should be no side effects of the function such as DOM Querying, HTTP Calls, Changing the Filesystem etc.</p>
+            <p>A pure function must pass two tests, first one is that same input should always return same output and the second one is that there should be no side effects of the function such as DOM Querying, HTTP Calls, Changing the Filesystem etc.</p>
           </div>
           <div class="tab-pane" id="visuals-{{i}}" role="tabpanel">
             <p>NONE</p>
@@ -56,6 +56,13 @@
               Posted by Prasheel Soni on 2019-03-28T10:15:00Z
             </p>
           </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="bg-transparent row">
+          <div class="col-6 text-center"><button class="btn btn-danger btn-round"><i class="now-ui-icons ui-2_favourite-28"></i> Like</button></div>
+          <div class="col-6 text-center"><button class="btn btn-info btn-round"><i class="now-ui-icons ui-1_send"></i> Share</button></div>
         </div>
       </div>
     </div>

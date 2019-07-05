@@ -11,6 +11,7 @@ export class WiltHomeComponent implements OnInit {
 
   ngOnInit() {
     this.nav.show();
+    this.nav.login();
   }
 
 }
