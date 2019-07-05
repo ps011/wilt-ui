@@ -1,41 +1,5 @@
-<nav class="navbar navbar-expand-lg bg-primary">
-  <div class="container">
-    <div class="navbar-translate">
-      <a class="navbar-brand" href="#pablo">Primary color</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#example-navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-bar bar1"></span>
-        <span class="navbar-toggler-bar bar2"></span>
-        <span class="navbar-toggler-bar bar3"></span>
-      </button>
-    </div>
-
-    <div class="collapse navbar-collapse" id="example-navbar-primary" data-nav-image="./assets/img/blurred-image-1.jpg">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#pablo">
-            <i class="now-ui-icons objects_globe"></i>
-            <p>Discover</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/profile">
-            <i class="now-ui-icons users_circle-08"></i>
-            <p>Profile</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#pablo">
-            <i class="now-ui-icons ui-1_settings-gear-63"></i>
-            <p>Settings</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <div class="row mb-5 mt-5">
-  <div class="input-group col-4 offset-4">
+  <div class="input-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
     <input type="text" class="form-control" placeholder="Search a WIL">
     <div class="input-group-append">
       <span class="input-group-text"><i class="now-ui-icons ui-1_zoom-bold"></i></span>
@@ -43,34 +7,33 @@
   </div>
 </div>
 
-
 <div class="row">
-  <div class="col-6" *ngFor="let item of [1,2,3,4,5,6]">
+  <div class="col-lg-6 col-md-12 col-sm-12" *ngFor="let item of [1,2,3,4,5,6]; let i = index">
     <div class="card">
       <div class="card-header">
         <ul class="nav nav-tabs justify-content-center" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Compact" role="tab" aria-selected="true">
+            <a class="nav-link active" data-toggle="tab" href="#compact-{{i}}" role="tab" aria-selected="true">
               <i class="now-ui-icons education_paper"></i>
-              Compact
+              <span>Compact</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Lengthy" role="tab" aria-selected="false">
+            <a class="nav-link" data-toggle="tab" href="#lengthy-{{i}}" role="tab" aria-selected="false">
               <i class="now-ui-icons education_agenda-bookmark"></i>
-              Lengthy
+              <span>Lengthy</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Visuals" role="tab" aria-selected="false">
+            <a class="nav-link" data-toggle="tab" href="#visuals-{{i}}" role="tab" aria-selected="false">
               <i class="now-ui-icons education_glasses"></i>
-              Visuals
+              <span>Visuals</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Author" role="tab" aria-selected="false">
+            <a class="nav-link" data-toggle="tab" href="#author-{{i}}" role="tab" aria-selected="false">
               <i class="now-ui-icons users_single-02"></i>
-              Author
+              <span>Author</span>
             </a>
           </li>
         </ul>
@@ -79,21 +42,59 @@
       <div class="card-body">
         <!-- Tab panes -->
         <div class="tab-content text-center">
-          <div class="tab-pane active" id="Compact" role="tabpanel">
+          <div class="tab-pane active" id="compact-{{i}}" role="tabpanel">
             <p>What is a pure function in Javascript?</p>
           </div>
-          <div class="tab-pane" id="Lengthy" role="tabpanel">
+          <div class="tab-pane" id="lengthy-{{i}}" role="tabpanel">
             <p> A pure function must pass two tests, first one is that same input should always return same output and the second one is that there should be no side effects of the function such as DOM Querying, HTTP Calls, Changing the Filesystem etc.</p>
           </div>
-          <div class="tab-pane" id="Visuals" role="tabpanel">
+          <div class="tab-pane" id="visuals-{{i}}" role="tabpanel">
             <p>NONE</p>
           </div>
-          <div class="tab-pane" id="Author" role="tabpanel">
+          <div class="tab-pane" id="author{{i}}" role="tabpanel">
             <p>
               Posted by Prasheel Soni on 2019-03-28T10:15:00Z
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="fab-btn">
+  <button class="btn btn-primary btn-icon btn-round btn-lg" data-toggle="modal" data-target="#myModal" type="button">
+    <i class="now-ui-icons ui-1_simple-add"></i>
+  </button>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="now-ui-icons ui-1_simple-remove"></i>
+        </button>
+        <h4 class="title title-up">What did you learnt today ?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" value="" placeholder="A compact headline for your WILT" class="form-control">
+        </div>
+        <div class="form-group">
+          <textarea type="text" value="" placeholder="A lengthy description for your WILT" class="form-control" ></textarea>
+        </div>
+        <div class="form-group">
+          <div class="btn btn-primary btn-round" >
+          <input type="file">
+            <i class="now-ui-icons arrows-1_cloud-upload-94"></i> Upload some Visuals
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>

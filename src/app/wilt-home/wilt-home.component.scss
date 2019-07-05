@@ -1,0 +1,46 @@
+
+
+@media only screen and (max-width: 767px) {
+  .nav-item {
+    span {
+      display: none;
+    }
+  }
+  .nav-tabs {
+    display: inline-flex;
+  }
+  .fab-btn {
+    position: fixed;
+    width: 56px;
+    left: 85%;
+    bottom: 25px;
+    margin-right: 15px;
+    margin-left: -28px;
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .nav-tabs {
+    display: inline-flex;
+  }
+  .fab-btn {
+    position: fixed;
+    width: 56px;
+    left: 85%;
+    bottom: 25px;
+    margin-right: 15px;
+    margin-left: -28px;
+    float: right;
+  }
+}
+
+.fab-btn {
+  position: fixed;
+  width: 56px;
+  left: 90%;
+  bottom: 25px;
+  margin-right: 15px;
+  margin-left: -28px;
+  float: right;
+}

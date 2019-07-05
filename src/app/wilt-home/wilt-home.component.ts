@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavService} from '../services/nav.service';
 
 @Component({
   selector: 'app-wilt-home',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wilt-home.component.scss']
 })
 export class WiltHomeComponent implements OnInit {
-
-  constructor() { }
+  constructor(public nav: NavService) { }
 
   ngOnInit() {
+    this.nav.show();
   }
 
 }

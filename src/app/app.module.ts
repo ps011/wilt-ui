@@ -10,6 +10,7 @@ import { WiltHomeComponent } from './wilt-home/wilt-home.component';
 import { WiltPageNotFoundComponent } from './wilt-page-not-found/wilt-page-not-found.component';
 import { WiltLandingComponent } from './wilt-landing/wilt-landing.component';
 import { WiltProfileComponent } from './wilt-profile/wilt-profile.component';
+import { WiltNavComponent } from './wilt-nav/wilt-nav.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
     WiltHomeComponent,
     WiltPageNotFoundComponent,
     WiltLandingComponent,
-    WiltProfileComponent
+    WiltProfileComponent,
+    WiltNavComponent
   ],
   imports: [
     BrowserModule,
