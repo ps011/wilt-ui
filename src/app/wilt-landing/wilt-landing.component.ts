@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavService} from '../services/nav.service';
 
 @Component({
   selector: 'app-wilt-landing',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WiltLandingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private nav: NavService) { }
 
   ngOnInit() {
+    this.nav.hide();
   }
 
 }

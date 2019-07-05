@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavService} from '../services/nav.service';
 
 @Component({
   selector: 'app-wilt-profile',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WiltProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(public nav: NavService) { }
 
   ngOnInit() {
+    this.nav.show();
   }
 
 }
