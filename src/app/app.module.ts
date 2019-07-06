@@ -11,6 +11,8 @@ import { WiltPageNotFoundComponent } from './wilt-page-not-found/wilt-page-not-f
 import { WiltLandingComponent } from './wilt-landing/wilt-landing.component';
 import { WiltProfileComponent } from './wilt-profile/wilt-profile.component';
 import { WiltNavComponent } from './wilt-nav/wilt-nav.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 const routes: Routes = [
@@ -36,7 +38,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
