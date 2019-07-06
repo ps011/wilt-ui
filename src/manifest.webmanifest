@@ -1,7 +1,7 @@
 {
   "name": "wilt-ui",
   "short_name": "wilt-ui",
-  "theme_color": "#1976d2",
+  "theme_color": "#fa7a50",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
