@@ -1,8 +1,16 @@
 language: node_js
-before_deploy:
-  "echo 'Starting pre deployment scripts'"
-  "npx ng build --prod"
+node_js:
+  - "11.0"
+branches:
+  only:
+    - develop
+before_script:
+  - npm install -g @angular/cli
+script:
+  - npm install
+  - npm run build
 deploy:
+  skip_cleanup: true
   provider: firebase
   token:
     secure: SBZcVlcTBxFl06ISmbpiGAs52KR/XdGDp18ciCfNb1rEsgF5sG+gvwBZ1TN8yN4otjU6Se62zemRQq4EC1HHiTOHzbapjped0u3gOjnNL7R7F1yodhdxzpRhzd4W1CmMnkDZLRowc1Epc4cv/MsC0WJQZdGewR1Ajz6bOXcqx2G7IKMKd9MuCi+Yj/dx57xsDM5Dd2TXrQA/EiAfLQZiRAyAFFHsaL0q8ofvp3rckITBJScJQ3RjoNl/RonpskJhZ/FnYxuC4RPQ66R2138xXilBa+B0yJgnu0w81cDWLIdYJzfTe9ve0BpDUPuez8yYD86Z7xXesOL75OEq22+12ui/iZAHgOnicIg85eRofgogRfhFJAFc82ho6zZeuSnGFlnh852svlhHPH/bPIR0aIIm3pT3Qdf5rc9hnhkOBRPm0075PlE0hexMM/yQ+tTlv6pqlFHL6cdx3amoV9pngVJMsdSGjs4Qbwr+3rqNhoIbim4IMCK0icKHA/oe660hdpq2bRJxzKxSuE0L2RCPsMQ176ItD1nfgeeYD1IUCQZVWSGKBX/1erxUoI8wfqOqins1hJ10621+yOqf4wDqPviY+kySZkVos9gjNE0N/HSR1/9bmrlIiWov6IAOhROBcvKuyX/Lwat7WkHmAQV57+uDzuALfpq9/tvadw4CQug=
