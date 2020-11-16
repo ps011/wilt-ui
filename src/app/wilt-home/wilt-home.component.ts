@@ -13,5 +13,4 @@ export class WiltHomeComponent implements OnInit {
     this.nav.show();
     this.nav.login();
   }
-
 }
