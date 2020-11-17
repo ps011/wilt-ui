@@ -13,6 +13,9 @@ import { WiltProfileComponent } from './wilt-profile/wilt-profile.component';
 import { WiltNavComponent } from './wilt-nav/wilt-nav.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -38,6 +41,9 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModalModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
