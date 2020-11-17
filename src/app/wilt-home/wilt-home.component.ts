@@ -29,7 +29,6 @@ export class WiltHomeComponent implements OnInit {
 
   ngOnInit() {
     this.nav.show();
-    this.nav.login();
     this.wiltService.getAllWilts()
     .subscribe(data => this.wilts = data);
   }
