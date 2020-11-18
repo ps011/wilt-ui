@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
   isLoggedIn = new BehaviorSubject(false);
+  savedWilts = new BehaviorSubject([]);
   constructor(private http: HttpClient) { }
 
   login(credentials) {
@@ -26,7 +27,37 @@ export class UserService {
     })
   }
 
+  getUserDetails(id) {
+    return this.http.get(`${environment.BASE_URL}/users/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  logout() {
+    return this.http.get(`${environment.BASE_URL}/users/logout`)
+  }
+
+  saveWilt(wilt) {
+    return this.http.post(`${environment.BASE_URL}/users/save`, {
+      userId: JSON.parse(localStorage.getItem('user')).id,
+      wiltId: wilt._id
+    })
+  }
+
+  unsaveWilt(wilt) {
+    return this.http.post(`${environment.BASE_URL}/users/unsave`, {
+      userId: JSON.parse(localStorage.getItem('user')).id,
+      wiltId: wilt._id
+    })
+  }
+
   setLoggedIn(isLoggedIn) {
     this.isLoggedIn.next(isLoggedIn);
+  }
+
+  setSavedWilts(wilts) {
+    this.savedWilts.next(wilts);
   }
 }

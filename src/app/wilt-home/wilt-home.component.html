@@ -55,7 +55,7 @@
           </div>
           <div class="tab-pane" id="author-{{i}}" role="tabpanel">
             <p>
-              Posted by Prasheel Soni on {{item.date | date}}
+              Posted by <a [routerLink]="['/user', item.userId]"><b>@{{ item.username }}</b></a> on {{item.date | date}}
             </p>
           </div>
         </div>
@@ -65,8 +65,11 @@
         <div class="bg-transparent d-flex flex-wrap justify-content-between">
           <div class="text-left my-auto mx-sm-4"><button class="badge badge-primary" *ngIf="item.category">{{ item.category }} </button></div>
           <div class="text-left my-auto flex-grow-1 mx-sm-4"><button class="badge badge-default" *ngIf="item.tags.length">{{item.tags.slice(0,8)}}</button></div>
-          <div class="text-center mx-sm-2"><button class="btn btn-danger btn-round"><i
-            class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
+          <div class="text-center mx-sm-2">
+            <button class="btn btn-danger btn-round"
+            [ngClass]="{'btn-simple': !isWiltSaved(item._id)}" 
+            (click)="onSaveWilt($event, item)">
+            <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
           <div class="text-center mx-sm-2"><button class="btn btn-info btn-round"><i class="now-ui-icons ui-1_send"></i>
               Share</button></div>
         </div>

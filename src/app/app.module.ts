@@ -23,6 +23,7 @@ const routes: Routes = [
   {path: 'signup', component: WiltSignupComponent},
   {path: 'home', component: WiltHomeComponent},
   {path: 'profile', component: WiltProfileComponent},
+  {path: 'user/:id', component: WiltProfileComponent},
   {path: '', component: WiltLandingComponent},
   {path: '**', component: WiltPageNotFoundComponent}
 ]

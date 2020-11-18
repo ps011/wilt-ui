@@ -21,6 +21,7 @@ export class WiltHomeComponent implements OnInit {
   closeResult: string;
   visualUrls = [];
   wilts: any;
+  savedWilts = [];
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -38,11 +39,15 @@ export class WiltHomeComponent implements OnInit {
               this.userService.setLoggedIn(true);
             });
         } else {
-          this.router.navigateByUrl("login");
+          return this.router.navigateByUrl("login");
         }
-      } else {
-        this.wiltService.getAllWilts().subscribe((data) => (this.wilts = data));
-      }
+      } 
+      this.wiltService.getAllWilts().subscribe((data) => (this.wilts = data));
+      this.userService.getUserDetails(JSON.parse(localStorage.getItem('user')).id)
+      .subscribe(user => {
+        this.savedWilts = user['saved_wilts'];
+        this.userService.setSavedWilts(this.savedWilts);
+      })
     });
   }
 
@@ -75,11 +80,26 @@ export class WiltHomeComponent implements OnInit {
           category: this.createForm.get("category").value,
           tags: this.createForm.get("tags").value,
           visuals: this.visualUrls,
+          userId: JSON.parse(localStorage.getItem('user')).id,
+          username: JSON.parse(localStorage.getItem('user')).username
         })
         .subscribe((data) => {
           this.createForm.reset();
           this.modalService.dismissAll();
         });
     }
+  }
+
+  onSaveWilt(event, wilt) { 
+    event.target.classList.toggle('btn-simple');
+      this.userService.saveWilt(wilt)
+      .subscribe(data => {
+        console.log(data);
+        this.userService.setSavedWilts(data);
+      });   
+  }
+
+  isWiltSaved(id) {
+    return this.savedWilts.indexOf(id) > -1;
   }
 }

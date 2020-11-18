@@ -16,4 +16,13 @@ export class WiltNavComponent implements OnInit {
     this.userService.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
   }
 
+  logout() {
+    this.userService.logout()
+    .subscribe(_data => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      this.userService.setLoggedIn(false);
+    })
+  }
+
 }
