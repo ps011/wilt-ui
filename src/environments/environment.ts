@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  CLOUDINARY_URL: 'https://api.cloudinary.com/v1_1/designu/raw/upload'
+  CLOUDINARY_URL: 'https://api.cloudinary.com/v1_1/designu/raw/upload',
+  BASE_URL: 'http://localhost:3000'
 };
 
 /*

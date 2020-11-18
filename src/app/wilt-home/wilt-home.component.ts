@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { NavService } from "../services/nav.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { WiltService } from "../services/wilt.service";
-import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import { environment } from "src/environments/environment";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserService } from "../services/user.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-wilt-home",
@@ -19,18 +19,31 @@ export class WiltHomeComponent implements OnInit {
     tags: new FormControl([]),
   });
   closeResult: string;
-  visualUrls = []
+  visualUrls = [];
   wilts: any;
   constructor(
-    public nav: NavService,
     private wiltService: WiltService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.nav.show();
-    this.wiltService.getAllWilts()
-    .subscribe(data => this.wilts = data);
+    this.userService.isLoggedIn.subscribe((isLoggedIn) => {
+      if (!isLoggedIn) {
+        if (localStorage.getItem("token")) {
+          this.userService
+            .validateToken(`Bearer ${localStorage.getItem("token")}`)
+            .subscribe((data) => {
+              this.userService.setLoggedIn(true);
+            });
+        } else {
+          this.router.navigateByUrl("login");
+        }
+      } else {
+        this.wiltService.getAllWilts().subscribe((data) => (this.wilts = data));
+      }
+    });
   }
 
   openModal(content) {
@@ -46,26 +59,27 @@ export class WiltHomeComponent implements OnInit {
 
   uploadImage(event) {
     const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    formData.append('upload_preset', 'wilt-ui');
-    this.wiltService.upload(formData)
-    .subscribe((data: any) => {
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", "wilt-ui");
+    this.wiltService.upload(formData).subscribe((data: any) => {
       this.visualUrls.push(data.url);
     });
   }
 
   onCreateFormSubmit() {
     if (this.createForm.valid) {
-      this.wiltService.createWilt({
-        compact: this.createForm.get('compact').value,
-        lengthy: this.createForm.get('lengthy').value,
-        category: this.createForm.get('category').value,
-        tags: this.createForm.get('tags').value,
-        visuals: this.visualUrls
-      }).subscribe((data) => {
-        this.createForm.reset();
-        this.modalService.dismissAll();
-      });
+      this.wiltService
+        .createWilt({
+          compact: this.createForm.get("compact").value,
+          lengthy: this.createForm.get("lengthy").value,
+          category: this.createForm.get("category").value,
+          tags: this.createForm.get("tags").value,
+          visuals: this.visualUrls,
+        })
+        .subscribe((data) => {
+          this.createForm.reset();
+          this.modalService.dismissAll();
+        });
     }
   }
 }

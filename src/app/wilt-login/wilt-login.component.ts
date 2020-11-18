@@ -17,15 +17,27 @@ export class WiltLoginComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private navService: NavService) { }
 
   ngOnInit() {
+    this.userService.isLoggedIn.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.router.navigateByUrl('/home');
+      } else if (localStorage.getItem('token')){
+        this.userService.validateToken(`Bearer ${localStorage.getItem('token')}`)
+        .subscribe(data => {
+          this.userService.setLoggedIn(true);
+        });
+      } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
+    });
   }
 
   onLogin() {
     this.userService.login(this.loginForm.value)
-    .subscribe(data => {
-      // Save data in local storage
-      this.navService.login();
-      this.router.navigateByUrl('/home');
-
+    .subscribe((data: any) => {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user))
+      this.userService.setLoggedIn(true);
     })
   }
 

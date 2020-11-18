@@ -9,11 +9,11 @@ export class WiltService {
   constructor(private http: HttpClient) { }
 
   createWilt(wilt) {
-    return this.http.post('https://wilt-services.herokuapp.com/wilt/create', wilt);
+    return this.http.post(`${environment.BASE_URL}/wilt/create`, wilt);
   }
 
   getAllWilts() {
-    return this.http.get('https://wilt-services.herokuapp.com/wilt/');
+    return this.http.get(`${environment.BASE_URL}/wilt/`);
   }
 
   upload(formData) {
