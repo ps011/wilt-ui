@@ -18,6 +18,7 @@ export class WiltHomeComponent implements OnInit {
     visuals: new FormControl([]),
     tags: new FormControl([]),
   });
+  loading: boolean;
   closeResult: string;
   visualUrls = [];
   wilts: any;
@@ -42,7 +43,11 @@ export class WiltHomeComponent implements OnInit {
           return this.router.navigateByUrl("login");
         }
       } 
-      this.wiltService.getAllWilts().subscribe((data) => (this.wilts = data));
+      this.loading = true;
+      this.wiltService.getAllWilts().subscribe(data => {
+        this.loading = false;
+        this.wilts = data
+      });
       this.userService.getUserDetails(JSON.parse(localStorage.getItem('user')).id)
       .subscribe(user => {
         this.savedWilts = user['saved_wilts'];
@@ -63,16 +68,19 @@ export class WiltHomeComponent implements OnInit {
   }
 
   uploadImage(event) {
+    this.loading = true;
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     formData.append("upload_preset", "wilt-ui");
     this.wiltService.upload(formData).subscribe((data: any) => {
+      this.loading = false;
       this.visualUrls.push(data.url);
     });
   }
 
   onCreateFormSubmit() {
     if (this.createForm.valid) {
+      this.loading = true;
       this.wiltService
         .createWilt({
           compact: this.createForm.get("compact").value,
@@ -84,6 +92,7 @@ export class WiltHomeComponent implements OnInit {
           username: JSON.parse(localStorage.getItem('user')).username
         })
         .subscribe((data) => {
+          this.loading = false;
           this.createForm.reset();
           this.modalService.dismissAll();
         });

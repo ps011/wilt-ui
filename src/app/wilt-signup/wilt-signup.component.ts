@@ -17,14 +17,17 @@ export class WiltSignupComponent implements OnInit {
     password: new FormControl(''),
     mobile: new FormControl('')
   })
+  loading: boolean;
   constructor(private userService: UserService, private router: Router, private navService: NavService) { }
 
   ngOnInit() {
   }
 
   onSignup() {
+    this.loading = true;
     this.userService.createUser(this.signupForm.value)
     .subscribe(data => {
+      this.loading = false;
       // Do something here, save JWT
       this.navService.login();
       this.router.navigateByUrl('/home');

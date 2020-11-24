@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderComponent } from './loader/loader.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,8 @@ const routes: Routes = [
     WiltPageNotFoundComponent,
     WiltLandingComponent,
     WiltProfileComponent,
-    WiltNavComponent
+    WiltNavComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

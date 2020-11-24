@@ -14,6 +14,7 @@ export class WiltLoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl('')
   })
+  loading: boolean;
   constructor(private userService: UserService, private router: Router, private navService: NavService) { }
 
   ngOnInit() {
@@ -33,8 +34,10 @@ export class WiltLoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.loading = true;
     this.userService.login(this.loginForm.value)
     .subscribe((data: any) => {
+      this.loading = false;
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user))
       this.userService.setLoggedIn(true);
