@@ -63,8 +63,10 @@
 
       <div class="card-footer">
         <div class="bg-transparent d-flex flex-wrap justify-content-between">
-          <div class="text-left my-auto mx-sm-4"><button class="badge badge-primary" *ngIf="item.category">{{ item.category }} </button></div>
-          <div class="text-left my-auto flex-grow-1 mx-sm-4"><button class="badge badge-default" *ngIf="item.tags.length">{{item.tags.slice(0,8)}}</button></div>
+          <div class="text-left my-auto mx-2"><button type="button" class="btn btn-primary btn-sm" *ngIf="item.category">{{ item.category }} </button></div>
+          <div class="text-left my-auto flex-grow-1 mx-2" *ngIf="item.tags.length">
+            <button class="badge badge-default mx-1" *ngFor="let tag of item.tags">{{tag}}</button>
+          </div>
           <div class="text-center mx-sm-2">
             <button class="btn btn-danger btn-round"
             [ngClass]="{'btn-simple': !isWiltSaved(item._id)}" 

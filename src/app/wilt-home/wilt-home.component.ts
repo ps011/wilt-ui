@@ -86,7 +86,7 @@ export class WiltHomeComponent implements OnInit {
           compact: this.createForm.get("compact").value,
           lengthy: this.createForm.get("lengthy").value,
           category: this.createForm.get("category").value,
-          tags: this.createForm.get("tags").value,
+          tags: this.createForm.get("tags").value.split(','),
           visuals: this.visualUrls,
           userId: JSON.parse(localStorage.getItem('user')).id,
           username: JSON.parse(localStorage.getItem('user')).username
