@@ -19,6 +19,7 @@ export class WiltHomeComponent implements OnInit {
     tags: new FormControl([]),
   });
   loading: boolean;
+  uploading: boolean;
   closeResult: string;
   visualUrls = [];
   wilts: any;
@@ -38,6 +39,9 @@ export class WiltHomeComponent implements OnInit {
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe((data) => {
               this.userService.setLoggedIn(true);
+            }, error => {
+              this.userService.logout();
+              this.router.navigateByUrl("login");              
             });
         } else {
           return this.router.navigateByUrl("login");
@@ -68,13 +72,14 @@ export class WiltHomeComponent implements OnInit {
   }
 
   uploadImage(event) {
-    this.loading = true;
+    this.uploading = true;
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     formData.append("upload_preset", "wilt-ui");
     this.wiltService.upload(formData).subscribe((data: any) => {
-      this.loading = false;
-      this.visualUrls.push(data.url);
+      this.visualUrls.push({name:  event.target.files[0].name, url: data.url });
+      this.createForm.controls['visuals'].reset()
+      this.uploading = false;
     });
   }
 
@@ -107,6 +112,15 @@ export class WiltHomeComponent implements OnInit {
         this.userService.setSavedWilts(data);
       });   
   }
+
+  removeImage(index) {
+    this.visualUrls.splice(index, 1);
+    this.createForm.controls['visuals'].reset()
+  }
+
+  identify(index, item) {
+    return item.url;
+ }
 
   isWiltSaved(id) {
     return this.savedWilts.indexOf(id) > -1;

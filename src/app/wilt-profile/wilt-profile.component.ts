@@ -15,7 +15,8 @@ export class WiltProfileComponent implements OnInit {
 
   ngOnInit() {
     const urlSegments = this.router.url.split('/');
-    if (urlSegments.includes('profile') || urlSegments.includes(JSON.parse(localStorage.getItem('user')).id)) {
+    const userId = JSON.parse(localStorage.getItem('user')).id
+    if (urlSegments.includes('profile') || urlSegments.includes(userId)) {
       this.self = true;
     } else {
       this.self = false;
@@ -33,7 +34,7 @@ export class WiltProfileComponent implements OnInit {
         }
       } 
       this.loading = true;
-      this.userService.getUserDetails(JSON.parse(localStorage.getItem('user')).id)
+      this.userService.getUserDetails(userId)
       .subscribe(user => {
         this.loading = false;
         if (user['profile_image'] === '') {

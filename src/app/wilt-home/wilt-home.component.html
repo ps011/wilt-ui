@@ -86,7 +86,7 @@
     <i class="now-ui-icons ui-1_simple-add"></i>
   </button>
 </div>
-<ng-template #create let-c="close" let-d="dismiss">
+<ng-template #create let-c="close" let-d="dismiss" let-urls="visualUrls">
   <div class="modal-header">
     <h5 class="modal-title text-center">What did you learn today?</h5>
     <button type="button" class="close" (click)="d('Cross click')">
@@ -114,8 +114,13 @@
           <input type="file" (change)="uploadImage($event)" formControlName="visuals">
           <i class="now-ui-icons arrows-1_cloud-upload-94"></i> Upload some Visuals
         </div>
+        <i class="now-ui-icons loader_refresh spin my-auto mx-4" *ngIf="uploading"></i>
       </div>
-    </div>
+      <button class="badge d-block badge-default mx-1"  *ngFor="let url of visualUrls; let i = index; trackBy: identify" >
+        {{url.name}}
+        <i class="now-ui-icons ui-1_simple-remove" (click)="removeImage(i)"></i>
+      </button>
+      </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       <button type="submit" class="btn btn-primary">Create</button>

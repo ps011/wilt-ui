@@ -28,6 +28,7 @@ export class UserService {
   }
 
   getUserDetails(id) {
+    console.log(id);
     return this.http.get(`${environment.BASE_URL}/users/${id}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import {NavService} from '../services/nav.service';
 import { UserService } from '../services/user.service';
 
@@ -9,10 +10,15 @@ import { UserService } from '../services/user.service';
 })
 export class WiltNavComponent implements OnInit {
   isLoggedIn: boolean;
-
-  constructor( public nav: NavService, private userService: UserService ) {}
+  currentRoute = '/home';
+  constructor( public nav: NavService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = this.router.url
+    }
+    })
     this.userService.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
   }
 
