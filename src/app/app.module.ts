@@ -15,8 +15,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderComponent } from './loader/loader.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     WiltLandingComponent,
     WiltProfileComponent,
     WiltNavComponent,
-    LoaderComponent
+    LoaderComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     NgbModalModule,
+    NgbAlertModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

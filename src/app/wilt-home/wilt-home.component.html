@@ -123,8 +123,9 @@
       </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="submit" class="btn btn-primary" [disabled]="uploading">Create</button>
     </div>
   </form>
 </ng-template>
 <app-loader *ngIf="loading"></app-loader>
+<app-notification [alerts]="alerts"></app-notification>

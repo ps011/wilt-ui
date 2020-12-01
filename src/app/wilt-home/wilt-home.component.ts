@@ -24,6 +24,7 @@ export class WiltHomeComponent implements OnInit {
   visualUrls = [];
   wilts: any;
   savedWilts = [];
+  alerts = [];
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -51,12 +52,12 @@ export class WiltHomeComponent implements OnInit {
       this.wiltService.getAllWilts().subscribe(data => {
         this.loading = false;
         this.wilts = data
-      });
+      }, this.handleNetworkError);
       this.userService.getUserDetails(JSON.parse(localStorage.getItem('user')).id)
       .subscribe(user => {
         this.savedWilts = user['saved_wilts'];
         this.userService.setSavedWilts(this.savedWilts);
-      })
+      }, this.handleNetworkError)
     });
   }
 
@@ -92,7 +93,7 @@ export class WiltHomeComponent implements OnInit {
           lengthy: this.createForm.get("lengthy").value,
           category: this.createForm.get("category").value,
           tags: this.createForm.get("tags").value.split(','),
-          visuals: this.visualUrls,
+          visuals: this.visualUrls.map(url => url.url),
           userId: JSON.parse(localStorage.getItem('user')).id,
           username: JSON.parse(localStorage.getItem('user')).username
         })
@@ -100,7 +101,7 @@ export class WiltHomeComponent implements OnInit {
           this.loading = false;
           this.createForm.reset();
           this.modalService.dismissAll();
-        });
+        }, this.handleNetworkError);
     }
   }
 
@@ -108,9 +109,8 @@ export class WiltHomeComponent implements OnInit {
     event.target.classList.toggle('btn-simple');
       this.userService.saveWilt(wilt)
       .subscribe(data => {
-        console.log(data);
         this.userService.setSavedWilts(data);
-      });   
+      }, this.handleNetworkError);   
   }
 
   removeImage(index) {
@@ -124,5 +124,24 @@ export class WiltHomeComponent implements OnInit {
 
   isWiltSaved(id) {
     return this.savedWilts.indexOf(id) > -1;
+  }
+
+  handleNetworkError(error) {
+      if (error.status >= 400 && error.status < 500) {
+      this.alerts.push({
+            type: 'danger',
+            strong: 'Oh snap!',
+            message: 'There is definitely something wrong. Try again 🌀',
+            icon: 'objects_support-17'
+        })
+      } else if (error.status >= 500 || error.status === 0) {
+        this.alerts.push({
+          type: 'warning',
+          strong: 'Impossible has happened!',
+          message: 'The system went to sleep. Wait for sometime till it gets back',
+          icon: 'ui-1_bell-53'
+      })
+      }
+        this.loading = false;
   }
 }
