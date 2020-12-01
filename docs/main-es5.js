@@ -45,6 +45,17 @@ module.exports = "<div class=\"loader-container\">\n    <div class=\"lds-ripple\
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/index.js!./src/app/notification/notification.component.html":
+/*!************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/notification/notification.component.html ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngFor=\"let alert of alerts\" class=\"alert-container\">\n  <ngb-alert [type]=\"alert.type\"  [dismissible]=\"false\" >\n      <div class=\"container\">\n          <div class=\"alert-wrapper\">\n              <button type=\"button\" name=\"button\" class=\"close\" (click)=\"closeAlert(alert)\">\n                <span aria-hidden=\"true\">\n                    <i class=\"now-ui-icons ui-1_simple-remove\"></i>\n                </span>\n              </button>\n              <div class=\"message\">\n                  <ng-container *ngIf=\"alert.icon\">\n                    <div class=\"alert-icon\">\n                        <i class=\"now-ui-icons {{alert.icon}}\"></i>\n                    </div>\n                  </ng-container>\n                  <strong>{{alert.strong}} </strong>{{ alert.message }}\n              </div>\n          </div>\n      </div>\n  </ngb-alert>\n</div>"
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/index.js!./src/app/wilt-home/wilt-home.component.html":
 /*!******************************************************************************!*\
   !*** ./node_modules/raw-loader!./src/app/wilt-home/wilt-home.component.html ***!
@@ -52,7 +63,7 @@ module.exports = "<div class=\"loader-container\">\n    <div class=\"lds-ripple\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row mb-5 mt-5\">\n  <div class=\"input-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Search a WIL\">\n    <div class=\"input-group-append\">\n      <span class=\"input-group-text\"><i class=\"now-ui-icons ui-1_zoom-bold\"></i></span>\n    </div>\n  </div>\n</div>\n\n<div class=\"row m-2\">\n  <div class=\"col-lg-4 col-md-12 col-sm-12\" *ngFor=\"let item of wilts; let i = index\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <ul class=\"nav nav-tabs justify-content-center\" role=\"tablist\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#compact-{{i}}\" role=\"tab\" aria-selected=\"true\">\n              <i class=\"now-ui-icons education_paper\"></i>\n              <span>Compact</span>\n            </a>\n          </li>\n          <li class=\"nav-item\" *ngIf=\"item.lengthy.length\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#lengthy-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons education_agenda-bookmark\"></i>\n              <span>Lengthy</span>\n            </a>\n          </li>\n          <li class=\"nav-item\" *ngIf=\"item.visuals.length\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#visuals-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons education_glasses\"></i>\n              <span>Visuals</span>\n            </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#author-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons users_single-02\"></i>\n              <span>Author</span>\n            </a>\n          </li>\n        </ul>\n      </div>\n\n      <div class=\"card-body\">\n        <!-- Tab panes -->\n        <div class=\"tab-content text-center\">\n          <div class=\"tab-pane active\" id=\"compact-{{i}}\" role=\"tabpanel\">\n            <h3><b>{{item.compact}}</b></h3>\n          </div>\n          <div class=\"tab-pane\" id=\"lengthy-{{i}}\" role=\"tabpanel\" *ngIf=\"item.lengthy.length\">\n            <p>{{item.lengthy}}</p>\n          </div>\n          <div class=\"tab-pane\" id=\"visuals-{{i}}\" role=\"tabpanel\" *ngIf=\"item.visuals.length\">\n            <div *ngFor=\"let visual of item.visuals\">\n              <img src=\"{{visual}}\" alt=\"Visual\" height=\"180px\">\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"author-{{i}}\" role=\"tabpanel\">\n            <p>\n              Posted by <a [routerLink]=\"['/user', item.userId]\"><b>@{{ item.username }}</b></a> on {{item.date | date}}\n            </p>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-footer\">\n        <div class=\"bg-transparent d-flex flex-wrap justify-content-between\">\n          <div class=\"text-left my-auto mx-sm-4\"><button class=\"badge badge-primary\" *ngIf=\"item.category\">{{ item.category }} </button></div>\n          <div class=\"text-left my-auto flex-grow-1 mx-sm-4\"><button class=\"badge badge-default\" *ngIf=\"item.tags.length\">{{item.tags.slice(0,8)}}</button></div>\n          <div class=\"text-center mx-sm-2\">\n            <button class=\"btn btn-danger btn-round\"\n            [ngClass]=\"{'btn-simple': !isWiltSaved(item._id)}\" \n            (click)=\"onSaveWilt($event, item)\">\n            <i class=\"now-ui-icons ui-2_favourite-28\"></i> Save</button></div>\n          <div class=\"text-center mx-sm-2\"><button class=\"btn btn-info btn-round\"><i class=\"now-ui-icons ui-1_send\"></i>\n              Share</button></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<div class=\"fab-btn\">\n  <button class=\"btn btn-primary btn-icon btn-round btn-lg\" (click)=\"openModal(create)\" type=\"button\">\n    <i class=\"now-ui-icons ui-1_simple-add\"></i>\n  </button>\n</div>\n<ng-template #create let-c=\"close\" let-d=\"dismiss\">\n  <div class=\"modal-header\">\n    <h5 class=\"modal-title text-center\">Modal title</h5>\n    <button type=\"button\" class=\"close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <form [formGroup]=\"createForm\" (ngSubmit)=\"onCreateFormSubmit()\">\n    <div class=\"modal-body\">\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"compact\" placeholder=\"A compact headline for your WILT\"\n          class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"category\" placeholder=\"Category of your WILT\" class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"tags\" placeholder=\"Tags for your WILT\" class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <textarea type=\"text\" value=\"\" formControlName=\"lengthy\" placeholder=\"A lengthy description for your WILT\"\n          class=\"form-control\"></textarea>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"btn btn-primary btn-round\">\n          <input type=\"file\" (change)=\"uploadImage($event)\" formControlName=\"visuals\">\n          <i class=\"now-ui-icons arrows-1_cloud-upload-94\"></i> Upload some Visuals\n        </div>\n      </div>\n    </div>\n    <div class=\"modal-footer\">\n      <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n      <button type=\"submit\" class=\"btn btn-primary\">Create</button>\n    </div>\n  </form>\n</ng-template>\n<app-loader *ngIf=\"loading\"></app-loader>"
+module.exports = "<div class=\"row mb-5 mt-5\">\n  <div class=\"input-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2\">\n    <input type=\"text\" class=\"form-control\" placeholder=\"Search a WIL\">\n    <div class=\"input-group-append\">\n      <span class=\"input-group-text\"><i class=\"now-ui-icons ui-1_zoom-bold\"></i></span>\n    </div>\n  </div>\n</div>\n\n<div class=\"row m-2\">\n  <div class=\"col-lg-4 col-md-12 col-sm-12\" *ngFor=\"let item of wilts; let i = index\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <ul class=\"nav nav-tabs justify-content-center\" role=\"tablist\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#compact-{{i}}\" role=\"tab\" aria-selected=\"true\">\n              <i class=\"now-ui-icons education_paper\"></i>\n              <span>Compact</span>\n            </a>\n          </li>\n          <li class=\"nav-item\" *ngIf=\"item.lengthy.length\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#lengthy-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons education_agenda-bookmark\"></i>\n              <span>Lengthy</span>\n            </a>\n          </li>\n          <li class=\"nav-item\" *ngIf=\"item.visuals.length\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#visuals-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons education_glasses\"></i>\n              <span>Visuals</span>\n            </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link\" data-toggle=\"tab\" href=\"#author-{{i}}\" role=\"tab\" aria-selected=\"false\">\n              <i class=\"now-ui-icons users_single-02\"></i>\n              <span>Author</span>\n            </a>\n          </li>\n        </ul>\n      </div>\n\n      <div class=\"card-body\">\n        <!-- Tab panes -->\n        <div class=\"tab-content text-center\">\n          <div class=\"tab-pane active\" id=\"compact-{{i}}\" role=\"tabpanel\">\n            <h3><b>{{item.compact}}</b></h3>\n          </div>\n          <div class=\"tab-pane\" id=\"lengthy-{{i}}\" role=\"tabpanel\" *ngIf=\"item.lengthy.length\">\n            <p>{{item.lengthy}}</p>\n          </div>\n          <div class=\"tab-pane\" id=\"visuals-{{i}}\" role=\"tabpanel\" *ngIf=\"item.visuals.length\">\n            <div *ngFor=\"let visual of item.visuals\">\n              <img src=\"{{visual}}\" alt=\"Visual\" height=\"180px\">\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"author-{{i}}\" role=\"tabpanel\">\n            <p>\n              Posted by <a [routerLink]=\"['/user', item.userId]\"><b>@{{ item.username }}</b></a> on {{item.date | date}}\n            </p>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"card-footer\">\n        <div class=\"bg-transparent d-flex flex-wrap justify-content-between\">\n          <div class=\"text-left my-auto mx-2\"><button type=\"button\" class=\"btn btn-primary btn-sm\" *ngIf=\"item.category\">{{ item.category | uppercase}} </button></div>\n          <div class=\"text-left my-auto flex-grow-1 mx-2\" *ngIf=\"item.tags.length\">\n            <button class=\"badge badge-default mx-1\" *ngFor=\"let tag of item.tags\">{{tag}}</button>\n          </div>\n          <div class=\"text-center mx-sm-2\">\n            <button class=\"btn btn-danger btn-round\"\n            [ngClass]=\"{'btn-simple': !isWiltSaved(item._id)}\" \n            (click)=\"onSaveWilt($event, item)\">\n            <i class=\"now-ui-icons ui-2_favourite-28\"></i> Save</button></div>\n          <div class=\"text-center mx-sm-2\"><button class=\"btn btn-info btn-round\"><i class=\"now-ui-icons ui-1_send\"></i>\n              Share</button></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<div class=\"fab-btn\">\n  <button class=\"btn btn-primary btn-icon btn-round btn-lg\" (click)=\"openModal(create)\" type=\"button\">\n    <i class=\"now-ui-icons ui-1_simple-add\"></i>\n  </button>\n</div>\n<ng-template #create let-c=\"close\" let-d=\"dismiss\" let-urls=\"visualUrls\">\n  <div class=\"modal-header\">\n    <h5 class=\"modal-title text-center\">What did you learn today?</h5>\n    <button type=\"button\" class=\"close\" (click)=\"d('Cross click')\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div>\n  <form [formGroup]=\"createForm\" (ngSubmit)=\"onCreateFormSubmit()\">\n    <div class=\"modal-body\">\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"compact\" placeholder=\"A compact headline for your WILT\"\n          class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"category\" placeholder=\"Category of your WILT\" class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <input type=\"text\" value=\"\" formControlName=\"tags\" placeholder=\"Tags for your WILT\" class=\"form-control\">\n      </div>\n      <div class=\"form-group\">\n        <textarea type=\"text\" value=\"\" formControlName=\"lengthy\" placeholder=\"A lengthy description for your WILT\"\n          class=\"form-control\"></textarea>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"btn btn-primary btn-round\">\n          <input type=\"file\" (change)=\"uploadImage($event)\" formControlName=\"visuals\">\n          <i class=\"now-ui-icons arrows-1_cloud-upload-94\"></i> Upload some Visuals\n        </div>\n        <i class=\"now-ui-icons loader_refresh spin my-auto mx-4\" *ngIf=\"uploading\"></i>\n      </div>\n      <button class=\"badge d-block badge-default mx-1\"  *ngFor=\"let url of visualUrls; let i = index; trackBy: identify\" >\n        {{url.name}}\n        <i class=\"now-ui-icons ui-1_simple-remove\" (click)=\"removeImage(i)\"></i>\n      </button>\n      </div>\n    <div class=\"modal-footer\">\n      <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n      <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"uploading\">Create</button>\n    </div>\n  </form>\n</ng-template>\n<app-loader *ngIf=\"loading\"></app-loader>\n<app-notification [alerts]=\"alerts\"></app-notification>"
 
 /***/ }),
 
@@ -74,7 +85,7 @@ module.exports = "<div class=\"landing-page sidebar-collapse\">\n<!-- Navbar -->
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page-header clear-filter\" filter-color=\"orange\">\n  <div class=\"page-header-image\" style=\"background-image:url('assets/img/login.jpg')\"></div>\n  <div class=\"content\">\n    <div class=\"container\">\n      <div class=\"col-md-4 ml-auto mr-auto\">\n        <div class=\"card card-login card-plain\">\n          <form [formGroup]=\"loginForm\" (ngSubmit)=\"onLogin()\">\n            <div class=\"card-header text-center\">\n              <div class=\"logo-container\">\n                <img src=\"assets/img/logo-wilt.png\" alt=\"\" />\n              </div>\n            </div>\n            <div class=\"card-body\">\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input \n                type=\"text\" \n                id=\"username\" \n                formControlName=\"username\"\n                class=\"form-control\" \n                placeholder=\"Username\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons objects_key-25\"></i>\n                    </span>\n                </div>\n                <input \n                type=\"password\" \n                id=\"password\" \n                placeholder=\"Password\" \n                formControlName=\"password\"\n                class=\"form-control\" />\n              </div>\n            </div>\n            <div class=\"card-footer text-center\">\n              <button type=\"submit\" class=\"btn btn-primary btn-round btn-lg btn-block\" >Login</button>\n              <div class=\"pull-left\">\n                <h6>\n                  <a routerLink=\"/signup\" class=\"link\">Create Account</a>\n                </h6>\n              </div>\n              <div class=\"pull-right\">\n                <h6>\n                  <a href=\"#\" class=\"link\">Need Help?</a>\n                </h6>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <app-loader *ngIf=\"loading\"></app-loader>\n"
+module.exports = "<div class=\"page-header clear-filter\" filter-color=\"orange\">\n  <div class=\"page-header-image\" style=\"background-image:url('assets/img/login.jpg')\"></div>\n  <div class=\"content\">\n    <div class=\"container\">\n      <div class=\"col-md-4 ml-auto mr-auto\">\n        <div class=\"card card-login card-plain\">\n          <form [formGroup]=\"loginForm\" (ngSubmit)=\"onLogin()\">\n            <div class=\"card-header text-center\">\n              <div class=\"logo-container\">\n                <img src=\"assets/img/logo-wilt.png\" alt=\"\" />\n              </div>\n            </div>\n            <div class=\"card-body\">\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input \n                type=\"text\" \n                id=\"username\" \n                formControlName=\"username\"\n                class=\"form-control\" \n                placeholder=\"Username\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons objects_key-25\"></i>\n                    </span>\n                </div>\n                <input \n                type=\"password\" \n                id=\"password\" \n                placeholder=\"Password\" \n                formControlName=\"password\"\n                class=\"form-control\" />\n              </div>\n            </div>\n            <div class=\"card-footer text-center\">\n              <button type=\"submit\" class=\"btn btn-primary btn-round btn-lg btn-block\" >Login</button>\n              <div class=\"pull-left\">\n                <h6>\n                  <a routerLink=\"/signup\" class=\"link\">Create Account</a>\n                </h6>\n              </div>\n              <div class=\"pull-right\">\n                <h6>\n                  <a href=\"#\" class=\"link\">Need Help?</a>\n                </h6>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n  <app-loader *ngIf=\"loading\"></app-loader>\n  <app-notification [alerts]=\"alerts\"></app-notification>\n"
 
 /***/ }),
 
@@ -85,7 +96,7 @@ module.exports = "<div class=\"page-header clear-filter\" filter-color=\"orange\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg bg-primary\" *ngIf=\"isLoggedIn\">\n  <div class=\"container\">\n    <div class=\"navbar-translate\">\n      <a class=\"navbar-brand\" href=\"#pablo\">W I L T</a>\n      <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#example-navbar-primary\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-bar bar1\"></span>\n        <span class=\"navbar-toggler-bar bar2\"></span>\n        <span class=\"navbar-toggler-bar bar3\"></span>\n      </button>\n    </div>\n\n    <div class=\"collapse navbar-collapse\" id=\"example-navbar-primary\" data-nav-image=\"assets/img/blurred-image-1.jpg\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item active\">\n          <a class=\"nav-link\" routerLink=\"/home\">\n            <i class=\"now-ui-icons objects_globe\"></i>\n            <p>Discover</p>\n          </a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/profile\">\n            <i class=\"now-ui-icons users_circle-08\"></i>\n            <p>Profile</p>\n          </a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" (click)=\"logout()\">\n            <i class=\"now-ui-icons media-1_button-power\"></i>\n            <p>Logout</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg bg-primary\" *ngIf=\"isLoggedIn\">\n  <div class=\"container\">\n    <div class=\"navbar-translate\">\n      <a class=\"navbar-brand\" href=\"#pablo\">W I L T</a>\n      <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#example-navbar-primary\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-bar bar1\"></span>\n        <span class=\"navbar-toggler-bar bar2\"></span>\n        <span class=\"navbar-toggler-bar bar3\"></span>\n      </button>\n    </div>\n\n    <div class=\"collapse navbar-collapse\" id=\"example-navbar-primary\" data-nav-image=\"assets/img/blurred-image-1.jpg\">\n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\" [ngClass]=\"{'active': currentRoute === '/home'}\">\n          <a class=\"nav-link\" routerLink=\"/home\">\n            <i class=\"now-ui-icons objects_globe\"></i>\n            <p>Discover</p>\n          </a>\n        </li>\n        <li class=\"nav-item\" [ngClass]=\"{'active': currentRoute === '/profile'}\">\n          <a class=\"nav-link\" routerLink=\"/profile\">\n            <i class=\"now-ui-icons users_circle-08\"></i>\n            <p>Profile</p>\n          </a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" (click)=\"logout()\">\n            <i class=\"now-ui-icons media-1_button-power\"></i>\n            <p>Logout</p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -107,7 +118,7 @@ module.exports = "<p>wilt-page-not-found works!</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"profile-page sidebar-collapse\">\n<div class=\"wrapper\">\n  <div class=\"page-header clear-filter\" filter-color=\"orange\">\n    <div class=\"page-header-image\" data-parallax=\"true\" style=\"background-image:url('assets/img/bg5.jpg');\">\n    </div>\n    <div class=\"container\">\n      <div class=\"photo-container\">\n        <img src=\"assets/img/ps.jpg\" alt=\"\">\n      </div>\n      <h3 class=\"title\">Prasheel Soni</h3>\n      <p class=\"category\">Engineer/ Traveller/ Rider</p>\n      <div class=\"content\">\n        <div class=\"social-description\">\n          <h2>58</h2>\n          <p>Likes</p>\n        </div>\n        <div class=\"social-description\">\n          <h2>26</h2>\n          <p>Comments</p>\n        </div>\n        <div class=\"social-description\">\n          <h2>48</h2>\n          <p>WILTs</p>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"section\">\n    <div class=\"container\">\n      <div class=\"button-container\">\n        <a href=\"#button\" class=\"btn btn-primary btn-round btn-lg\">Follow</a>\n        <a href=\"#button\" class=\"btn btn-default btn-round btn-lg btn-icon\" rel=\"tooltip\" title=\"Follow me on Twitter\">\n          <i class=\"fab fa-twitter\"></i>\n        </a>\n        <a href=\"#button\" class=\"btn btn-default btn-round btn-lg btn-icon\" rel=\"tooltip\" title=\"Follow me on Instagram\">\n          <i class=\"fab fa-instagram\"></i>\n        </a>\n      </div>\n      <h3 class=\"title\">About Prasheel</h3>\n      <h5 class=\"description\">Prasheel is a Full Stack Dev. He loves long bike rides and is an avid photographer </h5>\n      <div class=\"row\">\n        <div class=\"col-md-6 ml-auto mr-auto\">\n          <h4 class=\"title text-center\">Prasheel's WILTs</h4>\n          <div class=\"nav-align-center\">\n            <ul class=\"nav nav-pills nav-pills-primary nav-pills-just-icons\" role=\"tablist\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" data-toggle=\"tab\" href=\"#profile\" role=\"tablist\">\n                  <i class=\"now-ui-icons design_image\"></i>\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#home\" role=\"tablist\">\n                  <i class=\"now-ui-icons location_world\"></i>\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" data-toggle=\"tab\" href=\"#messages\" role=\"tablist\">\n                  <i class=\"now-ui-icons sport_user-run\"></i>\n                </a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <!-- Tab panes -->\n        <div class=\"tab-content gallery\">\n          <div class=\"tab-pane active\" id=\"home\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg1.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg3.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"profile\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg6.jpg\" class=\"img-raised\">\n                  <img src=\"assets/img/bg11.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"messages\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg3.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg6.jpg\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"profile-page sidebar-collapse\">\n<div class=\"wrapper\">\n  <div class=\"page-header clear-filter\" filter-color=\"orange\">\n    <div class=\"page-header-image\" data-parallax=\"true\" style=\"background-image:url('assets/img/bg5.jpg');\">\n    </div>\n    <div class=\"container\">\n      <div class=\"photo-container\">\n        <img [src]=\"user?.profile_image\" alt=\"\">\n      </div>\n      <h3 class=\"title\">{{user?.name}}</h3>\n      <p class=\"category\">{{ user?.headline }}</p>\n      <div class=\"content\">\n        <div class=\"social-description\">\n          <h2>{{ user?.saved_wilts.length }}</h2>\n          <p>WILTS</p>\n        </div>\n        <div class=\"social-description\">\n          <h2>{{ user?.followers.length }}</h2>\n          <p>Followers</p>\n        </div>\n        <div class=\"social-description\">\n          <h2>{{ user?.following.length }}</h2>\n          <p>Following</p>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"section\">\n    <div class=\"container\">\n      <div class=\"button-container\" *ngIf=\"!self\">\n        <a href=\"#button\" class=\"btn btn-primary btn-round btn-lg\">Follow</a>\n        <a href=\"#button\" class=\"btn btn-default btn-round btn-lg btn-icon\" rel=\"tooltip\" title=\"Follow me on Twitter\">\n          <i class=\"fab fa-twitter\"></i>\n        </a>\n        <a href=\"#button\" class=\"btn btn-default btn-round btn-lg btn-icon\" rel=\"tooltip\" title=\"Follow me on Instagram\">\n          <i class=\"fab fa-instagram\"></i>\n        </a>\n      </div>\n      <h3 class=\"title\">About {{ user?.name }}</h3>\n      <h5 class=\"description\">{{ user?.about }}</h5>\n      <div class=\"row\">\n        <div class=\"col-md-6 ml-auto mr-auto\">\n          <h4 class=\"title text-center\">{{user?.name}}'s WILTs</h4>\n          <div class=\"nav-align-center\">\n            <ul class=\"nav nav-pills nav-pills-primary nav-pills-just-icons\" role=\"tablist\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" data-toggle=\"tab\" href=\"#profile\" role=\"tablist\">\n                  <i class=\"now-ui-icons design_image\"></i>\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link active\" data-toggle=\"tab\" href=\"#home\" role=\"tablist\">\n                  <i class=\"now-ui-icons location_world\"></i>\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" data-toggle=\"tab\" href=\"#messages\" role=\"tablist\">\n                  <i class=\"now-ui-icons sport_user-run\"></i>\n                </a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <!-- Tab panes -->\n        <div class=\"tab-content gallery\">\n          <div class=\"tab-pane active\" id=\"home\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg1.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg3.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"profile\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg6.jpg\" class=\"img-raised\">\n                  <img src=\"assets/img/bg11.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"tab-pane\" id=\"messages\" role=\"tabpanel\">\n            <div class=\"col-md-10 ml-auto mr-auto\">\n              <div class=\"row collections\">\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg3.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg8.jpg\" alt=\"\" class=\"img-raised\">\n                </div>\n                <div class=\"col-md-6\">\n                  <img src=\"assets/img/bg7.jpg\" alt=\"\" class=\"img-raised\">\n                  <img src=\"assets/img/bg6.jpg\" class=\"img-raised\">\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<app-loader *ngIf=\"loading\"></app-loader>"
 
 /***/ }),
 
@@ -118,7 +129,7 @@ module.exports = "<div class=\"profile-page sidebar-collapse\">\n<div class=\"wr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page-header clear-filter\" filter-color=\"orange\">\n  <div class=\"page-header-image\" style=\"background-image:url('assets/img/login.jpg')\"></div>\n  <div class=\"content\">\n    <div class=\"container\">\n      <div class=\"col-md-4 ml-auto mr-auto\">\n        <div class=\"card card-login card-plain\">\n          <form [formGroup]=\"signupForm\" (ngSubmit)=\"onSignup()\">\n            <div class=\"card-header text-center\">\n              <div class=\"logo-container\">\n                <img src=\"assets/img/logo-wilt.png\" alt=\"\" />\n              </div>\n            </div>\n            <div class=\"card-body\">\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"username\" class=\"form-control\" placeholder=\"Username\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"name\" placeholder=\"Enter your Name\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons ui-1_email-85\"></i>\n                    </span>\n                </div>\n                <input type=\"email\" formControlName=\"email\" placeholder=\"Email Address\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons objects_key-25\"></i>\n                    </span>\n                </div>\n                <input type=\"password\" formControlName=\"password\" placeholder=\"Password\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons tech_mobile\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"mobile\" placeholder=\"Enter your Mobile Number\" class=\"form-control\" />\n              </div>\n            </div>\n            <div class=\"card-footer text-center\">\n              <button type=\"submit\" class=\"btn btn-primary btn-round btn-lg btn-block\">Create Account</button>\n              <div class=\"pull-left\">\n                <h6>\n                  <a routerLink=\"/login\" class=\"link\">Go to Login</a>\n                </h6>\n              </div>\n              <div class=\"pull-right\">\n                <h6>\n                  <a href=\"#pablo\" class=\"link\">Need Help?</a>\n                </h6>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<app-loader *ngIf=\"loading\"></app-loader>\n"
+module.exports = "<div class=\"page-header clear-filter\" filter-color=\"orange\">\n  <div class=\"page-header-image\" style=\"background-image:url('assets/img/login.jpg')\"></div>\n  <div class=\"content\">\n    <div class=\"container\">\n      <div class=\"col-md-4 ml-auto mr-auto\">\n        <div class=\"card card-login card-plain\">\n          <form [formGroup]=\"signupForm\" (ngSubmit)=\"onSignup()\">\n            <div class=\"card-header text-center\">\n              <div class=\"logo-container\">\n                <img src=\"assets/img/logo-wilt.png\" alt=\"\" />\n              </div>\n            </div>\n            <div class=\"card-body\">\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"username\" class=\"form-control\" placeholder=\"Username\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons users_circle-08\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"name\" placeholder=\"Enter your Name\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons ui-1_email-85\"></i>\n                    </span>\n                </div>\n                <input type=\"email\" formControlName=\"email\" placeholder=\"Email Address\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons objects_key-25\"></i>\n                    </span>\n                </div>\n                <input type=\"password\" formControlName=\"password\" placeholder=\"Password\" class=\"form-control\" />\n              </div>\n              <div class=\"input-group no-border input-lg\">\n                <div class=\"input-group-prepend\">\n                    <span class=\"input-group-text\">\n                      <i class=\"now-ui-icons tech_mobile\"></i>\n                    </span>\n                </div>\n                <input type=\"text\" formControlName=\"mobile\" placeholder=\"Enter your Mobile Number\" class=\"form-control\" />\n              </div>\n            </div>\n            <div class=\"card-footer text-center\">\n              <button type=\"submit\" class=\"btn btn-primary btn-round btn-lg btn-block\">Create Account</button>\n              <div class=\"pull-left\">\n                <h6>\n                  <a routerLink=\"/login\" class=\"link\">Go to Login</a>\n                </h6>\n              </div>\n              <div class=\"pull-right\">\n                <h6>\n                  <a href=\"#pablo\" class=\"link\">Need Help?</a>\n                </h6>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<app-loader *ngIf=\"loading\"></app-loader>\n<app-notification [alerts]=\"alerts\"></app-notification>\n"
 
 /***/ }),
 
@@ -227,6 +238,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 /* harmony import */ var _loader_loader_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./loader/loader.component */ "./src/app/loader/loader.component.ts");
+/* harmony import */ var _notification_notification_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./notification/notification.component */ "./src/app/notification/notification.component.ts");
+
 
 
 
@@ -269,7 +282,8 @@ var AppModule = /** @class */ (function () {
                 _wilt_landing_wilt_landing_component__WEBPACK_IMPORTED_MODULE_10__["WiltLandingComponent"],
                 _wilt_profile_wilt_profile_component__WEBPACK_IMPORTED_MODULE_11__["WiltProfileComponent"],
                 _wilt_nav_wilt_nav_component__WEBPACK_IMPORTED_MODULE_12__["WiltNavComponent"],
-                _loader_loader_component__WEBPACK_IMPORTED_MODULE_18__["LoaderComponent"]
+                _loader_loader_component__WEBPACK_IMPORTED_MODULE_18__["LoaderComponent"],
+                _notification_notification_component__WEBPACK_IMPORTED_MODULE_19__["NotificationComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -277,6 +291,7 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_15__["ReactiveFormsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_16__["HttpClientModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__["NgbModalModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__["NgbAlertModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterModule"].forRoot(routes),
                 _angular_service_worker__WEBPACK_IMPORTED_MODULE_13__["ServiceWorkerModule"].register('ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_14__["environment"].production })
             ],
@@ -329,6 +344,81 @@ var LoaderComponent = /** @class */ (function () {
         })
     ], LoaderComponent);
     return LoaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/notification/notification.component.scss":
+/*!**********************************************************!*\
+  !*** ./src/app/notification/notification.component.scss ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".alert-container {\n  position: absolute;\n  top: 10%;\n  width: 60vw;\n  left: 20vw;\n  z-index: 99;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9wczExL0RvY3VtZW50cy9Qcm9qZWN0cy93aWx0LXVpL3NyYy9hcHAvbm90aWZpY2F0aW9uL25vdGlmaWNhdGlvbi5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbm90aWZpY2F0aW9uL25vdGlmaWNhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGtCQUFBO0VBQ0EsUUFBQTtFQUNBLFdBQUE7RUFDQSxVQUFBO0VBQ0EsV0FBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbm90aWZpY2F0aW9uL25vdGlmaWNhdGlvbi5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5hbGVydC1jb250YWluZXIge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICB0b3A6IDEwJTtcbiAgICB3aWR0aDogNjB2dztcbiAgICBsZWZ0OiAyMHZ3O1xuICAgIHotaW5kZXg6IDk5O1xufSIsIi5hbGVydC1jb250YWluZXIge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMTAlO1xuICB3aWR0aDogNjB2dztcbiAgbGVmdDogMjB2dztcbiAgei1pbmRleDogOTk7XG59Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/notification/notification.component.ts":
+/*!********************************************************!*\
+  !*** ./src/app/notification/notification.component.ts ***!
+  \********************************************************/
+/*! exports provided: NotificationComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationComponent", function() { return NotificationComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var NotificationComponent = /** @class */ (function () {
+    function NotificationComponent() {
+        this.alerts = [];
+        // this.alerts.push({
+        //     id: 1,
+        //     type: 'success',
+        //     strong: 'Well done!',
+        //     message: 'You successfully read this important alert message.',
+        //     icon: 'ui-2_like'
+        // }, {
+        //     id: 2,
+        //     strong: 'Heads up!',
+        //     type: 'info',
+        //     message: 'This is an info alert',
+        //     icon: 'travel_info'
+        // }, {
+        //     id: 3,
+        //     type: 'warning',
+        //     strong: 'Warning!',
+        //     message: 'This is a warning alert',
+        //     icon: 'ui-1_bell-53'
+        // }, {
+        //     id: 4,
+        //     type: 'danger',
+        //     strong: 'Oh snap!',
+        //     message: 'This is a danger alert',
+        //     icon: 'objects_support-17'
+        // });
+    }
+    NotificationComponent.prototype.closeAlert = function (alert) {
+        var index = this.alerts.indexOf(alert);
+        this.alerts.splice(index, 1);
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+    ], NotificationComponent.prototype, "alerts", void 0);
+    NotificationComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-notification',
+            template: __webpack_require__(/*! raw-loader!./notification.component.html */ "./node_modules/raw-loader/index.js!./src/app/notification/notification.component.html"),
+            styles: [__webpack_require__(/*! ./notification.component.scss */ "./src/app/notification/notification.component.scss")]
+        })
+    ], NotificationComponent);
+    return NotificationComponent;
 }());
 
 
@@ -546,6 +636,7 @@ var WiltHomeComponent = /** @class */ (function () {
         });
         this.visualUrls = [];
         this.savedWilts = [];
+        this.alerts = [];
     }
     WiltHomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -556,6 +647,9 @@ var WiltHomeComponent = /** @class */ (function () {
                         .validateToken("Bearer " + localStorage.getItem("token"))
                         .subscribe(function (data) {
                         _this.userService.setLoggedIn(true);
+                    }, function (error) {
+                        _this.userService.logout();
+                        _this.router.navigateByUrl("login");
                     });
                 }
                 else {
@@ -566,12 +660,12 @@ var WiltHomeComponent = /** @class */ (function () {
             _this.wiltService.getAllWilts().subscribe(function (data) {
                 _this.loading = false;
                 _this.wilts = data;
-            });
+            }, _this.handleNetworkError);
             _this.userService.getUserDetails(JSON.parse(localStorage.getItem('user')).id)
                 .subscribe(function (user) {
                 _this.savedWilts = user['saved_wilts'];
                 _this.userService.setSavedWilts(_this.savedWilts);
-            });
+            }, _this.handleNetworkError);
         });
     };
     WiltHomeComponent.prototype.openModal = function (content) {
@@ -584,13 +678,14 @@ var WiltHomeComponent = /** @class */ (function () {
     };
     WiltHomeComponent.prototype.uploadImage = function (event) {
         var _this = this;
-        this.loading = true;
+        this.uploading = true;
         var formData = new FormData();
         formData.append("file", event.target.files[0]);
         formData.append("upload_preset", "wilt-ui");
         this.wiltService.upload(formData).subscribe(function (data) {
-            _this.loading = false;
-            _this.visualUrls.push(data.url);
+            _this.visualUrls.push({ name: event.target.files[0].name, url: data.url });
+            _this.createForm.controls['visuals'].reset();
+            _this.uploading = false;
         });
     };
     WiltHomeComponent.prototype.onCreateFormSubmit = function () {
@@ -602,8 +697,8 @@ var WiltHomeComponent = /** @class */ (function () {
                 compact: this.createForm.get("compact").value,
                 lengthy: this.createForm.get("lengthy").value,
                 category: this.createForm.get("category").value,
-                tags: this.createForm.get("tags").value,
-                visuals: this.visualUrls,
+                tags: this.createForm.get("tags").value.split(','),
+                visuals: this.visualUrls.map(function (url) { return url.url; }),
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 username: JSON.parse(localStorage.getItem('user')).username
             })
@@ -611,7 +706,7 @@ var WiltHomeComponent = /** @class */ (function () {
                 _this.loading = false;
                 _this.createForm.reset();
                 _this.modalService.dismissAll();
-            });
+            }, this.handleNetworkError);
         }
     };
     WiltHomeComponent.prototype.onSaveWilt = function (event, wilt) {
@@ -619,12 +714,37 @@ var WiltHomeComponent = /** @class */ (function () {
         event.target.classList.toggle('btn-simple');
         this.userService.saveWilt(wilt)
             .subscribe(function (data) {
-            console.log(data);
             _this.userService.setSavedWilts(data);
-        });
+        }, this.handleNetworkError);
+    };
+    WiltHomeComponent.prototype.removeImage = function (index) {
+        this.visualUrls.splice(index, 1);
+        this.createForm.controls['visuals'].reset();
+    };
+    WiltHomeComponent.prototype.identify = function (index, item) {
+        return item.url;
     };
     WiltHomeComponent.prototype.isWiltSaved = function (id) {
         return this.savedWilts.indexOf(id) > -1;
+    };
+    WiltHomeComponent.prototype.handleNetworkError = function (error) {
+        if (error.status >= 400 && error.status < 500) {
+            this.alerts.push({
+                type: 'danger',
+                strong: 'Oh snap!',
+                message: 'There is definitely something wrong. Try again 🌀',
+                icon: 'objects_support-17'
+            });
+        }
+        else if (error.status >= 500 || error.status === 0) {
+            this.alerts.push({
+                type: 'warning',
+                strong: 'Impossible has happened!',
+                message: 'The system went to sleep. Wait for sometime till it gets back',
+                icon: 'ui-1_bell-53'
+            });
+        }
+        this.loading = false;
     };
     WiltHomeComponent.ctorParameters = function () { return [
         { type: _services_wilt_service__WEBPACK_IMPORTED_MODULE_3__["WiltService"] },
@@ -722,23 +842,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_nav_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/nav.service */ "./src/app/services/nav.service.ts");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
-
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
 
 
 
 
 
 var WiltLoginComponent = /** @class */ (function () {
-    function WiltLoginComponent(userService, router, navService) {
+    function WiltLoginComponent(userService, router) {
         this.userService = userService;
         this.router = router;
-        this.navService = navService;
         this.loginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
             username: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
         });
+        this.alerts = [];
     }
     WiltLoginComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -767,12 +885,29 @@ var WiltLoginComponent = /** @class */ (function () {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
             _this.userService.setLoggedIn(true);
+        }, function (error) {
+            if (error.status === 401) {
+                _this.alerts.push({
+                    type: 'danger',
+                    strong: 'Oh snap!',
+                    message: 'I cannot find this Username/Password combination!!',
+                    icon: 'objects_support-17'
+                });
+            }
+            else if (error.status === 500 || error.status === 0) {
+                _this.alerts.push({
+                    type: 'warning',
+                    strong: 'Impossible has happened!',
+                    message: 'The system went to sleep. Wait for sometime till it gets back',
+                    icon: 'ui-1_bell-53'
+                });
+            }
+            _this.loading = false;
         });
     };
     WiltLoginComponent.ctorParameters = function () { return [
-        { type: _services_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"] },
-        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
-        { type: _services_nav_service__WEBPACK_IMPORTED_MODULE_4__["NavService"] }
+        { type: _services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
     ]; };
     WiltLoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -811,19 +946,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WiltNavComponent", function() { return WiltNavComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_nav_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/nav.service */ "./src/app/services/nav.service.ts");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_nav_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/nav.service */ "./src/app/services/nav.service.ts");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+
 
 
 
 
 var WiltNavComponent = /** @class */ (function () {
-    function WiltNavComponent(nav, userService) {
+    function WiltNavComponent(nav, userService, router) {
         this.nav = nav;
         this.userService = userService;
+        this.router = router;
+        this.currentRoute = '/home';
     }
     WiltNavComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.router.events.subscribe(function (event) {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                _this.currentRoute = _this.router.url;
+            }
+        });
         this.userService.isLoggedIn.subscribe(function (isLoggedIn) { return _this.isLoggedIn = isLoggedIn; });
     };
     WiltNavComponent.prototype.logout = function () {
@@ -836,8 +980,9 @@ var WiltNavComponent = /** @class */ (function () {
         });
     };
     WiltNavComponent.ctorParameters = function () { return [
-        { type: _services_nav_service__WEBPACK_IMPORTED_MODULE_2__["NavService"] },
-        { type: _services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] }
+        { type: _services_nav_service__WEBPACK_IMPORTED_MODULE_3__["NavService"] },
+        { type: _services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
     ]; };
     WiltNavComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -920,19 +1065,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WiltProfileComponent", function() { return WiltProfileComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_nav_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/nav.service */ "./src/app/services/nav.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/user.service */ "./src/app/services/user.service.ts");
+
 
 
 
 var WiltProfileComponent = /** @class */ (function () {
-    function WiltProfileComponent(nav) {
-        this.nav = nav;
+    function WiltProfileComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
+        this.self = true;
     }
     WiltProfileComponent.prototype.ngOnInit = function () {
-        this.nav.show();
+        var _this = this;
+        var urlSegments = this.router.url.split('/');
+        var userId = JSON.parse(localStorage.getItem('user')).id;
+        if (urlSegments.includes('profile') || urlSegments.includes(userId)) {
+            this.self = true;
+        }
+        else {
+            this.self = false;
+        }
+        this.userService.isLoggedIn.subscribe(function (isLoggedIn) {
+            if (!isLoggedIn) {
+                if (localStorage.getItem("token")) {
+                    _this.userService
+                        .validateToken("Bearer " + localStorage.getItem("token"))
+                        .subscribe(function (data) {
+                        _this.userService.setLoggedIn(true);
+                    });
+                }
+                else {
+                    return _this.router.navigateByUrl("login");
+                }
+            }
+            _this.loading = true;
+            _this.userService.getUserDetails(userId)
+                .subscribe(function (user) {
+                _this.loading = false;
+                if (user['profile_image'] === '') {
+                    user['profile_image'] = 'assets/img/default-avatar.png';
+                }
+                _this.user = user;
+            });
+        });
     };
     WiltProfileComponent.ctorParameters = function () { return [
-        { type: _services_nav_service__WEBPACK_IMPORTED_MODULE_2__["NavService"] }
+        { type: _services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+        { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
     ]; };
     WiltProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -993,6 +1174,7 @@ var WiltSignupComponent = /** @class */ (function () {
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             mobile: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
         });
+        this.alerts = [];
     }
     WiltSignupComponent.prototype.ngOnInit = function () {
     };
@@ -1005,6 +1187,24 @@ var WiltSignupComponent = /** @class */ (function () {
             // Do something here, save JWT
             _this.navService.login();
             _this.router.navigateByUrl('/home');
+        }, function (error) {
+            if (error.status === 401) {
+                _this.alerts.push({
+                    type: 'danger',
+                    strong: 'Oh snap!',
+                    message: 'I cannot find this Username/Password combination!!',
+                    icon: 'objects_support-17'
+                });
+            }
+            else if (error.status === 500 || error.status === 0) {
+                _this.alerts.push({
+                    type: 'warning',
+                    strong: 'Impossible has happened!',
+                    message: 'The system went to sleep. Wait for sometime till it gets back',
+                    icon: 'ui-1_bell-53'
+                });
+            }
+            _this.loading = false;
         });
     };
     WiltSignupComponent.ctorParameters = function () { return [
