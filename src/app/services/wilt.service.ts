@@ -16,6 +16,10 @@ export class WiltService {
     return this.http.get(`${environment.BASE_URL}/wilt/`);
   }
 
+  getCategories() {
+    return this.http.get(`${environment.BASE_URL}/categories/`);
+  }
+
   upload(formData) {
     return this.http.post('https://api.cloudinary.com/v1_1/designu/raw/upload', formData);
   }

@@ -25,6 +25,7 @@ export class WiltHomeComponent implements OnInit {
   wilts: any;
   savedWilts = [];
   alerts = [];
+  categories = [];
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -57,7 +58,9 @@ export class WiltHomeComponent implements OnInit {
       .subscribe(user => {
         this.savedWilts = user['saved_wilts'];
         this.userService.setSavedWilts(this.savedWilts);
-      }, this.handleNetworkError)
+      }, this.handleNetworkError);
+      this.wiltService.getCategories()
+      .subscribe((categories:any) => this.categories = categories, this.handleNetworkError);
     });
   }
 

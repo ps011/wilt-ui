@@ -63,15 +63,15 @@
 
       <div class="card-footer">
         <div class="bg-transparent d-flex flex-wrap justify-content-between">
-          <div class="text-left my-auto mx-2"><button type="button" class="btn btn-primary btn-sm" *ngIf="item.category">{{ item.category | uppercase}} </button></div>
+          <div class="text-left my-auto mx-2"><button type="button" class="btn btn-primary btn-sm"
+              *ngIf="item.category">{{ item.category | uppercase}} </button></div>
           <div class="text-left my-auto flex-grow-1 mx-2" *ngIf="item.tags.length">
             <button class="badge badge-default mx-1" *ngFor="let tag of item.tags">{{tag}}</button>
           </div>
           <div class="text-center mx-sm-2">
-            <button class="btn btn-danger btn-round"
-            [ngClass]="{'btn-simple': !isWiltSaved(item._id)}" 
-            (click)="onSaveWilt($event, item)">
-            <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
+            <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !isWiltSaved(item._id)}"
+              (click)="onSaveWilt($event, item)">
+              <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
           <div class="text-center mx-sm-2"><button class="btn btn-info btn-round"><i class="now-ui-icons ui-1_send"></i>
               Share</button></div>
         </div>
@@ -100,7 +100,11 @@
           class="form-control">
       </div>
       <div class="form-group">
-        <input type="text" value="" formControlName="category" placeholder="Category of your WILT" class="form-control">
+        <!-- <input type="dropdown" value="" formControlName="category" placeholder="Category of your WILT" class="form-control"> -->
+        <select name="cars" formControlName="category" class="dropdown form-control">
+          <option value="" disabled selected>Choose a Category</option>
+          <option *ngFor="let category of categories" [value]="category._id">{{category.name}}</option>
+        </select>
       </div>
       <div class="form-group">
         <input type="text" value="" formControlName="tags" placeholder="Tags for your WILT" class="form-control">
@@ -116,11 +120,11 @@
         </div>
         <i class="now-ui-icons loader_refresh spin my-auto mx-4" *ngIf="uploading"></i>
       </div>
-      <button class="badge d-block badge-default mx-1"  *ngFor="let url of visualUrls; let i = index; trackBy: identify" >
+      <button class="badge d-block badge-default mx-1" *ngFor="let url of visualUrls; let i = index; trackBy: identify">
         {{url.name}}
         <i class="now-ui-icons ui-1_simple-remove" (click)="removeImage(i)"></i>
       </button>
-      </div>
+    </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       <button type="submit" class="btn btn-primary" [disabled]="uploading">Create</button>
