@@ -1,6 +1,6 @@
 <div class="row mb-5 mt-5">
   <div class="input-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
-    <input type="text" class="form-control" placeholder="Search a WIL">
+    <input type="text" class="form-control" placeholder="Search a WIL" (input)="search($event)">
     <div class="input-group-append">
       <span class="input-group-text"><i class="now-ui-icons ui-1_zoom-bold"></i></span>
     </div>
@@ -8,7 +8,7 @@
 </div>
 
 <div class="row m-2">
-  <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let item of wilts; let i = index">
+  <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let item of wilts; let i = index; trackBy: trackWilt">
     <div class="card">
       <div class="card-header">
         <ul class="nav nav-tabs justify-content-center" role="tablist">
