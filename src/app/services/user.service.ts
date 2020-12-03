@@ -35,6 +35,14 @@ export class UserService {
     });
   }
 
+  updateUser(user) {
+    return this.http.post(`${environment.BASE_URL}/users/update/${user.id}`, user, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   logout() {
     return this.http.get(`${environment.BASE_URL}/users/logout`)
   }

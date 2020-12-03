@@ -4,11 +4,20 @@
     <div class="page-header-image" data-parallax="true" style="background-image:url('assets/img/bg5.jpg');">
     </div>
     <div class="container">
+      <!-- <div class="photo-container">
+        <img [src]="user?.profile_image" alt="" class="overlay">
+      </div> -->
       <div class="photo-container">
-        <img [src]="user?.profile_image" alt="">
+        <img [src]="user?.profile_image" alt="Avatar" class="image">
+        <div class="middle form-group" *ngIf="self">
+          <div class="btn btn-primary btn-round">
+            <input type="file" (change)="onProfileImageChanged($event)">
+            <i class="now-ui-icons arrows-1_refresh-69"></i> Change
+          </div>
+        </div>
       </div>
-      <h3 class="title">{{user?.name}}</h3>
-      <p class="category">{{ user?.headline }}</p>
+      <h3 class="title pt-0" [contentEditable]="self" (blur)="onTextFieldChanged($event, 'name')">{{user?.name}}</h3>
+      <p class="category" [contentEditable]="self" (blur)="onTextFieldChanged($event, 'headline')">{{ user?.headline }}</p>
       <div class="content">
         <div class="social-description">
           <h2>{{ user?.saved_wilts.length }}</h2>
@@ -27,7 +36,7 @@
   </div>
   <div class="section">
     <div class="container">
-      <div class="button-container" *ngIf="!self">
+      <div class="button-container" *ngIf="self">
         <a href="#button" class="btn btn-primary btn-round btn-lg">Follow</a>
         <a href="#button" class="btn btn-default btn-round btn-lg btn-icon" rel="tooltip" title="Follow me on Twitter">
           <i class="fab fa-twitter"></i>
@@ -37,7 +46,7 @@
         </a>
       </div>
       <h3 class="title">About {{ user?.name }}</h3>
-      <h5 class="description">{{ user?.about }}</h5>
+      <h5 class="description" [contentEditable]="self" (blur)="onTextFieldChanged($event, 'about')">{{ user?.about }}</h5>
       <div class="row">
         <div class="col-md-6 ml-auto mr-auto">
           <h4 class="title text-center">{{user?.name}}'s WILTs</h4>
@@ -111,3 +120,4 @@
   </div>
 </div>
 <app-loader *ngIf="loading"></app-loader>
+<app-notification [alerts]="alerts"></app-notification>
