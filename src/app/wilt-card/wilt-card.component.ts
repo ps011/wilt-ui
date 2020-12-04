@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { WiltService } from '../services/wilt.service';
@@ -11,7 +11,9 @@ import { WiltService } from '../services/wilt.service';
 export class WiltCardComponent implements OnInit {
   @Input() item: any;
   @Input() i: number;
-  @Input() savedWilts = [];
+  @Input() savedWilts = []; 
+  @Output() filter = new EventEmitter<Object>();
+
   alerts = [];
   loading: boolean;
   single: boolean;
@@ -36,6 +38,13 @@ export class WiltCardComponent implements OnInit {
     }
   }
 
+
+  onFilterChanged(event, type) {
+    this.filter.emit({
+      name: event.target.innerText,
+      type
+    });
+}
 
   onSaveWilt(event, wilt) {
     event.target.classList.toggle("btn-simple");

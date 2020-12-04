@@ -27,6 +27,7 @@ export class WiltHomeComponent implements OnInit {
   savedWilts = [];
   alerts = [];
   categories = [];
+  filters = [];
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -54,7 +55,7 @@ export class WiltHomeComponent implements OnInit {
         }
       }
       this.loading = true;
-      this.wiltService.getAllWilts().subscribe((data) => {
+      this.wiltService.getAllWilts(null, null).subscribe((data) => {
         this.loading = false;
         this.wilts = data;
         this.backupWilts = this.wilts;
@@ -118,6 +119,22 @@ export class WiltHomeComponent implements OnInit {
     }
   }
 
+  onFilterChanged(event) {
+  const filterDoesExist = this.filters.find(element => element.name === event.name && element.type === event.type);
+  if (!filterDoesExist || filterDoesExist.length === 0) {
+    this.filters.push(event);
+  } else {
+    this.filters.splice(this.filters.findIndex((pm) => (pm.name === filterDoesExist.name && pm.type === filterDoesExist.type)), 1);
+  }
+  const tags = this.filters.filter(f => f.type === 'tags').map(f => f.name.toLowerCase());
+  const categories = this.filters.filter(f => f.type === 'category').map(f => f.name.toLowerCase());
+  this.wiltService.getAllWilts(tags, categories)
+  .subscribe((data) => {
+    this.loading = false;
+    this.wilts = data;
+    this.backupWilts = this.wilts;
+  }, this.handleNetworkError);
+  }
  
   removeImage(index) {
     this.visualUrls.splice(index, 1);
@@ -127,8 +144,6 @@ export class WiltHomeComponent implements OnInit {
   identify(index, item) {
     return item.url;
   }
-
-
 
   handleNetworkError(error) {
     if (error.status >= 400 && error.status < 500) {

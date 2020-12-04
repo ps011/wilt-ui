@@ -53,9 +53,9 @@
     <div class="card-footer">
       <div class="bg-transparent d-flex flex-wrap justify-content-between">
         <div class="text-left my-auto mx-2"><button type="button" class="btn btn-primary btn-sm"
-            *ngIf="item?.category">{{ item?.category | uppercase}} </button></div>
+            *ngIf="item?.category" (click)="onFilterChanged($event, 'category')">{{ item?.category | uppercase}} </button></div>
         <div class="text-left my-auto flex-grow-1 mx-2" *ngIf="item?.tags?.length">
-          <button class="badge badge-default mx-1" *ngFor="let tag of item?.tags">{{tag}}</button>
+          <button class="badge badge-default mx-1" *ngFor="let tag of item?.tags" (click)="onFilterChanged($event, 'tags')">{{tag}}</button>
         </div>
         <div class="text-center mx-sm-2">
           <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !isWiltSaved(item?._id)}"
