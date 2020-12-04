@@ -1,0 +1,47 @@
+.single {
+  max-width: 50vw;
+  display: block;
+  margin: 10% auto 0;
+  position: relative;
+}
+
+@media only screen and (max-width: 767px) {
+    .nav-item {
+      span {
+        display: none;
+      }
+    }
+    .nav-tabs {
+      display: inline-flex;
+    }
+    
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .nav-tabs {
+      display: inline-flex;
+    }
+  }
+
+  
+  .navbar {
+    margin-bottom: 0;
+  }
+  
+  .card-header, .card-body{
+    background: #ffe1c1;
+  }
+  
+  .card-footer {
+    margin-top: 0;
+  }
+  
+  p {
+    color: #141413;
+    font-weight: 500;
+  }
+  
+  span {
+    display: inline;
+  }
+  

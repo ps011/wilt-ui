@@ -1,0 +1,69 @@
+<div class="card" [ngClass]="{'single': single}">
+    <div class="card-header">
+      <ul class="nav nav-tabs justify-content-center" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#compact-{{i}}" role="tab" aria-selected="true">
+            <i class="now-ui-icons education_paper"></i>
+            <span>Compact</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="item?.lengthy?.length">
+          <a class="nav-link" data-toggle="tab" href="#lengthy-{{i}}" role="tab" aria-selected="false">
+            <i class="now-ui-icons education_agenda-bookmark"></i>
+            <span>Lengthy</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="item?.visuals?.length">
+          <a class="nav-link" data-toggle="tab" href="#visuals-{{i}}" role="tab" aria-selected="false">
+            <i class="now-ui-icons education_glasses"></i>
+            <span>Visuals</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!single">
+          <a class="nav-link" data-toggle="tab" href="#author-{{i}}" role="tab" aria-selected="false">
+            <i class="now-ui-icons users_single-02"></i>
+            <span>Author</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body">
+      <!-- Tab panes -->
+      <div class="tab-content text-center">
+        <div class="tab-pane active" id="compact-{{i}}" role="tabpanel">
+          <h3><b>{{item?.compact}}</b></h3>
+        </div>
+        <div class="tab-pane" id="lengthy-{{i}}" role="tabpanel" *ngIf="item?.lengthy?.length">
+          <p>{{item.lengthy}}</p>
+        </div>
+        <div class="tab-pane" id="visuals-{{i}}" role="tabpanel" *ngIf="item?.visuals?.length">
+          <div *ngFor="let visual of item?.visuals">
+            <img src="{{visual}}" alt="Visual" height="180px">
+          </div>
+        </div>
+        <div class="tab-pane" id="author-{{i}}" role="tabpanel" *ngIf="!single">
+          <p>
+            Posted by <a [routerLink]="['/user', item?.userId]"><b>@{{ item?.username }}</b></a> on {{item?.date | date}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="bg-transparent d-flex flex-wrap justify-content-between">
+        <div class="text-left my-auto mx-2"><button type="button" class="btn btn-primary btn-sm"
+            *ngIf="item?.category">{{ item?.category | uppercase}} </button></div>
+        <div class="text-left my-auto flex-grow-1 mx-2" *ngIf="item?.tags?.length">
+          <button class="badge badge-default mx-1" *ngFor="let tag of item?.tags">{{tag}}</button>
+        </div>
+        <div class="text-center mx-sm-2">
+          <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !isWiltSaved(item?._id)}"
+            (click)="onSaveWilt($event, item)">
+            <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
+        <div class="text-center mx-sm-2"><button class="btn btn-info btn-round" (click)="onShareWilt()"><i class="now-ui-icons ui-1_send"></i>
+            Share</button></div>
+      </div>
+    </div>
+  </div>
+  <app-notification [alerts]="alerts"></app-notification>

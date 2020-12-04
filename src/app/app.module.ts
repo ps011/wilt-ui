@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WiltLoginComponent } from './wilt-login/wilt-login.component';
-import {RouterModule, Routes} from '@angular/router';
 import { WiltSignupComponent } from './wilt-signup/wilt-signup.component';
 import { WiltHomeComponent } from './wilt-home/wilt-home.component';
 import { WiltPageNotFoundComponent } from './wilt-page-not-found/wilt-page-not-found.component';
@@ -18,17 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbAlertModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderComponent } from './loader/loader.component';
 import { NotificationComponent } from './notification/notification.component';
-
-
-const routes: Routes = [
-  {path: 'login', component: WiltLoginComponent},
-  {path: 'signup', component: WiltSignupComponent},
-  {path: 'home', component: WiltHomeComponent},
-  {path: 'profile', component: WiltProfileComponent},
-  {path: 'user/:id', component: WiltProfileComponent},
-  {path: '', component: WiltLandingComponent},
-  {path: '**', component: WiltPageNotFoundComponent}
-]
+import { WiltCardComponent } from './wilt-card/wilt-card.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +30,8 @@ const routes: Routes = [
     WiltProfileComponent,
     WiltNavComponent,
     LoaderComponent,
-    NotificationComponent
+    NotificationComponent,
+    WiltCardComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +40,6 @@ const routes: Routes = [
     HttpClientModule,
     NgbModalModule,
     NgbAlertModule,
-    RouterModule.forRoot(routes),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

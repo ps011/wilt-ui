@@ -16,6 +16,10 @@ export class WiltService {
     return this.http.get(`${environment.BASE_URL}/wilt/`);
   }
 
+  getWiltDetails(id) {
+    return this.http.get(`${environment.BASE_URL}/wilt/${id}`);
+  }
+
   getCategories() {
     return this.http.get(`${environment.BASE_URL}/categories/`);
   }

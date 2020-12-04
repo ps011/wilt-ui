@@ -118,13 +118,7 @@ export class WiltHomeComponent implements OnInit {
     }
   }
 
-  onSaveWilt(event, wilt) {
-    event.target.classList.toggle("btn-simple");
-    this.userService.saveWilt(wilt).subscribe((data) => {
-      this.userService.setSavedWilts(data);
-    }, this.handleNetworkError);
-  }
-
+ 
   removeImage(index) {
     this.visualUrls.splice(index, 1);
     this.createForm.controls["visuals"].reset();
@@ -134,9 +128,7 @@ export class WiltHomeComponent implements OnInit {
     return item.url;
   }
 
-  isWiltSaved(id) {
-    return this.savedWilts.indexOf(id) > -1;
-  }
+
 
   handleNetworkError(error) {
     if (error.status >= 400 && error.status < 500) {
