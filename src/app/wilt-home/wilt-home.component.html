@@ -16,8 +16,8 @@
   <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let item of wilts; let i = index; trackBy: trackWilt">
     <app-wilt-card 
     [item]="item" 
-    [i]="i" 
-    [savedWilts]="savedWilts"
+    [i]="i"
+    [saved]="isWiltSaved(item._id)"
     (filter)="onFilterChanged($event)"></app-wilt-card>
   </div>
 </div>

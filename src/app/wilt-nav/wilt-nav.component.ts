@@ -26,7 +26,7 @@ export class WiltNavComponent implements OnInit {
     this.userService.logout()
     .subscribe(_data => {
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('userId');
       this.userService.setLoggedIn(false);
     })
   }

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   isLoggedIn = new BehaviorSubject(false);
   savedWilts = new BehaviorSubject([]);
+  user =  new BehaviorSubject({});
   constructor(private http: HttpClient) { }
 
   login(credentials) {
@@ -43,20 +44,31 @@ export class UserService {
     });
   }
 
+  blockUser(user) {
+    return this.http.get(`${environment.BASE_URL}/users/block/${user}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  }
+
+  unblockUser(user) {
+    return this.http.get(`${environment.BASE_URL}/users/unblock/${user}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  }
+
   logout() {
+    this.setLoggedIn(false);
+    this.setUser({});
     return this.http.get(`${environment.BASE_URL}/users/logout`)
   }
 
   saveWilt(wilt) {
     return this.http.post(`${environment.BASE_URL}/users/save`, {
-      userId: JSON.parse(localStorage.getItem('user')).id,
-      wiltId: wilt._id
-    })
-  }
-
-  unsaveWilt(wilt) {
-    return this.http.post(`${environment.BASE_URL}/users/unsave`, {
-      userId: JSON.parse(localStorage.getItem('user')).id,
+      userId: localStorage.getItem('userId'),
       wiltId: wilt._id
     })
   }
@@ -67,5 +79,9 @@ export class UserService {
 
   setSavedWilts(wilts) {
     this.savedWilts.next(wilts);
+  }
+
+  setUser(user) {
+    this.user.next(user);
   }
 }

@@ -58,7 +58,7 @@
           <button class="badge badge-default mx-1" *ngFor="let tag of item?.tags" (click)="onFilterChanged($event, 'tags')">{{tag}}</button>
         </div>
         <div class="text-center mx-sm-2">
-          <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !isWiltSaved(item?._id)}"
+          <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !saved}"
             (click)="onSaveWilt($event, item)">
             <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
         <div class="text-center mx-sm-2"><button class="btn btn-info btn-round" (click)="onShareWilt()"><i class="now-ui-icons ui-1_send"></i>

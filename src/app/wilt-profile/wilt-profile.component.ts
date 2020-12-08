@@ -21,19 +21,21 @@ export class WiltProfileComponent implements OnInit {
 
   ngOnInit() {
     const urlSegments = this.router.url.split("/");
-    const userId = JSON.parse(localStorage.getItem("user")).id;
+    let userId;
     if (urlSegments.includes("profile") || urlSegments.includes(userId)) {
       this.self = true;
+      userId = localStorage.getItem("userId");
     } else {
       this.self = false;
+      userId = urlSegments[urlSegments.length - 1];
     }
     this.userService.isLoggedIn.subscribe((isLoggedIn) => {
       if (!isLoggedIn) {
         if (localStorage.getItem("token")) {
           this.userService
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
-            .subscribe(
-              (data) => {
+            .subscribe(data => {
+                this.userService.setUser(data);
                 this.userService.setLoggedIn(true);
               },
               (error) => this.handleNetworkError(error)
@@ -77,7 +79,9 @@ export class WiltProfileComponent implements OnInit {
     }
   }
 
-  onHeadlineChanged(event) {}
+  blockUnblockUser() {
+
+  }
 
   onProfileImageChanged(event) {
     this.loading = true;

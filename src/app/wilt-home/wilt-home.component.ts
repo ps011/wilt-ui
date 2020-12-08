@@ -43,7 +43,9 @@ export class WiltHomeComponent implements OnInit {
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe(
               (data) => {
+                this.userService.setUser(data);
                 this.userService.setLoggedIn(true);
+                this.savedWilts = data['saved_wilts'];
               },
               (error) => {
                 this.userService.logout();
@@ -55,17 +57,14 @@ export class WiltHomeComponent implements OnInit {
         }
       }
       this.loading = true;
+      if(this.savedWilts.length === 0) {
+        this.savedWilts = this.userService.user.value['saved_wilts'];
+      }
       this.wiltService.getAllWilts(null, null).subscribe((data) => {
         this.loading = false;
         this.wilts = data;
         this.backupWilts = this.wilts;
       }, this.handleNetworkError);
-      this.userService
-        .getUserDetails(JSON.parse(localStorage.getItem("user")).id)
-        .subscribe((user) => {
-          this.savedWilts = user["saved_wilts"];
-          this.userService.setSavedWilts(this.savedWilts);
-        }, this.handleNetworkError);
       this.wiltService
         .getCategories()
         .subscribe(
@@ -84,6 +83,10 @@ export class WiltHomeComponent implements OnInit {
         // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
+  }
+
+  isWiltSaved(id) {
+    return this.savedWilts.indexOf(id) > -1;
   }
 
   uploadImage(event) {
@@ -108,7 +111,7 @@ export class WiltHomeComponent implements OnInit {
           category: this.createForm.get("category").value,
           tags: this.createForm.get("tags").value.split(","),
           visuals: this.visualUrls.map((url) => url.url),
-          userId: JSON.parse(localStorage.getItem("user")).id,
+          userId: JSON.parse(localStorage.getItem("user"))._id,
           username: JSON.parse(localStorage.getItem("user")).username,
         })
         .subscribe((data) => {

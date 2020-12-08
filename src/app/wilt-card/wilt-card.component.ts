@@ -11,7 +11,7 @@ import { WiltService } from '../services/wilt.service';
 export class WiltCardComponent implements OnInit {
   @Input() item: any;
   @Input() i: number;
-  @Input() savedWilts = []; 
+  @Input() saved: boolean;
   @Output() filter = new EventEmitter<Object>();
 
   alerts = [];
@@ -28,10 +28,8 @@ export class WiltCardComponent implements OnInit {
       this.i = 1;
       this.activatedRoute.params
       .subscribe(params => {
-        // this.item['userId'] = params.id;
         this.wiltService.getWiltDetails(params.id)
         .subscribe(data => {
-          console.log(data);
           this.item = data;
         });
       });
@@ -47,7 +45,7 @@ export class WiltCardComponent implements OnInit {
 }
 
   onSaveWilt(event, wilt) {
-    event.target.classList.toggle("btn-simple");
+    this.saved = !this.saved;
     this.userService.saveWilt(wilt).subscribe((data) => {
       this.userService.setSavedWilts(data);
     }, this.handleNetworkError);
@@ -63,10 +61,6 @@ export class WiltCardComponent implements OnInit {
       icon: "ui-1_bell-53",
     });
 
-  }
-
-  isWiltSaved(id) {
-    return this.savedWilts.indexOf(id) > -1;
   }
 
   handleNetworkError(error) {

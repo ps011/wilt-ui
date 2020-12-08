@@ -40,8 +40,9 @@ export class WiltLoginComponent implements OnInit {
     .subscribe((data: any) => {
       this.loading = false;
       localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('userId', data.user._id)
       this.userService.setLoggedIn(true);
+      this.userService.setUser(data.user);
     }, error => {
       if (error.status === 401) {
       this.alerts.push({
