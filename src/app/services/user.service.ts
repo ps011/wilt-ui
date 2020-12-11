@@ -60,6 +60,22 @@ export class UserService {
     })
   }
 
+  followUser(user) {
+    return this.http.get(`${environment.BASE_URL}/users/follow/${user}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  }
+
+  unfollowUser(user) {
+    return this.http.get(`${environment.BASE_URL}/users/unfollow/${user}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+  }
+
   logout() {
     this.setLoggedIn(false);
     this.setUser({});

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "../services/user.service";
 import { WiltService } from "../services/wilt.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-wilt-profile",
@@ -12,22 +13,24 @@ export class WiltProfileComponent implements OnInit {
   loading: boolean;
   user: any;
   self = true;
+  blocked: boolean;
   alerts = [];
+  userId;
   constructor(
     public userService: UserService,
     private wiltService: WiltService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit() {
     const urlSegments = this.router.url.split("/");
-    let userId;
-    if (urlSegments.includes("profile") || urlSegments.includes(userId)) {
+    if (urlSegments.includes("profile") || urlSegments.includes(this.userId)) {
       this.self = true;
-      userId = localStorage.getItem("userId");
+      this.userId = localStorage.getItem("userId");
     } else {
       this.self = false;
-      userId = urlSegments[urlSegments.length - 1];
+      this.userId = urlSegments[urlSegments.length - 1];
     }
     this.userService.isLoggedIn.subscribe((isLoggedIn) => {
       if (!isLoggedIn) {
@@ -45,12 +48,11 @@ export class WiltProfileComponent implements OnInit {
         }
       }
       this.loading = true;
-      this.userService.getUserDetails(userId).subscribe((user) => {
+      this.userService.getUserDetails(this.userId).subscribe((user) => {
         this.loading = false;
         if (user["profile_image"] === "") {
           user["profile_image"] = "assets/img/default-avatar.png";
         }
-
         if (!user["about"] || user["about"] === "") {
           user["about"] =
             "Uh Oh! We know nothing about you. Tell us something interesting !!";
@@ -80,8 +82,70 @@ export class WiltProfileComponent implements OnInit {
   }
 
   blockUnblockUser() {
-
+      if(this.user['blocked'].indexOf(this.userId) === -1) {
+        this.userService.blockUser(this.userId)
+        .subscribe(data => {
+          this.userService.setUser(data);
+          this.user['blocked'].push(this.userId);
+          // setTimeout(() => this.location.back(), 3000);
+          this.alerts.push({
+            type: "success",
+            strong: "Blocked!!!",
+            message:
+              "You won't see them again.",
+            icon: "ui-2_like",
+          });
+        });
+      } else {
+        this.userService.unblockUser(this.userId)
+        .subscribe(data => {
+          this.userService.setUser(data);
+          this.user['blocked'].splice(this.user['blocked'].indexOf(this.userId), 1);
+          // setTimeout(() => this.location.back(), 3000);
+          this.alerts.push({
+            type: "success",
+            strong: "Unblocked!!!",
+            message:
+              "You can see them again.",
+            icon: "ui-2_like",
+          });
+        });
+      }
   }
+
+  followUnfollowUser() {
+    if(this.user['followers'].indexOf(this.userId) === -1) {
+      this.userService.followUser(this.userId)
+      .subscribe(data => {
+        this.userService.setUser(data);
+        this.user['followers'].push(this.userId);
+        this.alerts.push({
+          type: "success",
+          strong: "Followed!!!",
+          message:
+            "You'll see them in your feeds now",
+          icon: "ui-2_like",
+        });
+      });
+    } else {
+      this.userService.unfollowUser(this.userId)
+      .subscribe(data => {
+        this.userService.setUser(data);
+        this.user['followers'].splice(this.user['followers'].indexOf(this.userId), 1);
+        this.alerts.push({
+          type: "success",
+          strong: "Unfollowed!!!",
+          message:
+            "You won't see them in your feeds now",
+          icon: "ui-2_like",
+        });
+      });
+    }
+}
+
+isFollowing() {
+  return this.user.followers.indexOf(this.userId) > -1
+}
 
   onProfileImageChanged(event) {
     this.loading = true;

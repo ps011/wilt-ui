@@ -34,8 +34,8 @@
   <div class="section">
     <div class="container">
       <div class="button-container" *ngIf="!self">
-        <a href="#button" class="btn btn-primary btn-round btn-lg">Follow</a>
-        <a (click)="blockUnblockUser()" class="btn btn-danger btn-round btn-lg btn-icon" rel="tooltip" title="Block User">
+        <a *ngIf="!blocked" (click)="followUnfollowUser()" class="btn btn-primary btn-round btn-lg">{{ isFollowing() ? 'Unfollow' : 'Follow' }}</a>
+        <a (click)="blockUnblockUser()" class="btn btn-danger btn-round btn-lg btn-icon" rel="tooltip" title="Block/Unblolck User">
           <i class="fab fa fa-ban" aria-hidden="true"></i>
         </a>
         <a href="#button" class="btn btn-success btn-round btn-lg btn-icon" rel="tooltip" title="Share Profile">
