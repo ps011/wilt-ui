@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { WiltService } from "../services/wilt.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
   templateUrl: "./wilt-home.component.html",
   styleUrls: ["./wilt-home.component.scss"],
 })
-export class WiltHomeComponent implements OnInit {
+export class WiltHomeComponent implements OnInit, OnDestroy {
   createForm = new FormGroup({
     compact: new FormControl("", Validators.required),
     category: new FormControl("", Validators.required),
@@ -28,24 +28,28 @@ export class WiltHomeComponent implements OnInit {
   alerts = [];
   categories = [];
   filters = [];
+  loggedInSubscription;
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
     private userService: UserService,
     private router: Router
   ) {}
+  ngOnDestroy(): void {
+    this.loggedInSubscription.unsubscribe();
+  }
 
   ngOnInit() {
-    this.userService.isLoggedIn.subscribe((isLoggedIn) => {
+    this.loggedInSubscription = this.userService.isLoggedIn.subscribe((isLoggedIn) => {
       if (!isLoggedIn) {
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("token") !== null) {
           this.userService
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe(
               (data) => {
                 this.userService.setUser(data);
                 this.userService.setLoggedIn(true);
-                this.savedWilts = data['saved_wilts'];
+                this.savedWilts = data["saved_wilts"];
               },
               (error) => {
                 this.userService.logout();
@@ -55,22 +59,23 @@ export class WiltHomeComponent implements OnInit {
         } else {
           return this.router.navigateByUrl("login");
         }
+      } else {
+        this.loading = true;
+        if (this.savedWilts.length === 0) {
+          this.savedWilts = this.userService.user.value["saved_wilts"];
+        }
+        this.wiltService.getAllWilts(null, null).subscribe((data) => {
+          this.loading = false;
+          this.wilts = data;
+          this.backupWilts = this.wilts;
+        }, this.handleNetworkError);
+        this.wiltService
+          .getCategories()
+          .subscribe(
+            (categories: any) => (this.categories = categories),
+            this.handleNetworkError
+          );
       }
-      this.loading = true;
-      if(this.savedWilts.length === 0) {
-        this.savedWilts = this.userService.user.value['saved_wilts'];
-      }
-      this.wiltService.getAllWilts(null, null).subscribe((data) => {
-        this.loading = false;
-        this.wilts = data;
-        this.backupWilts = this.wilts;
-      }, this.handleNetworkError);
-      this.wiltService
-        .getCategories()
-        .subscribe(
-          (categories: any) => (this.categories = categories),
-          this.handleNetworkError
-        );
     });
   }
 
@@ -123,22 +128,33 @@ export class WiltHomeComponent implements OnInit {
   }
 
   onFilterChanged(event) {
-  const filterDoesExist = this.filters.find(element => element.name === event.name && element.type === event.type);
-  if (!filterDoesExist || filterDoesExist.length === 0) {
-    this.filters.push(event);
-  } else {
-    this.filters.splice(this.filters.findIndex((pm) => (pm.name === filterDoesExist.name && pm.type === filterDoesExist.type)), 1);
+    const filterDoesExist = this.filters.find(
+      (element) => element.name === event.name && element.type === event.type
+    );
+    if (!filterDoesExist || filterDoesExist.length === 0) {
+      this.filters.push(event);
+    } else {
+      this.filters.splice(
+        this.filters.findIndex(
+          (pm) =>
+            pm.name === filterDoesExist.name && pm.type === filterDoesExist.type
+        ),
+        1
+      );
+    }
+    const tags = this.filters
+      .filter((f) => f.type === "tags")
+      .map((f) => f.name.toLowerCase());
+    const categories = this.filters
+      .filter((f) => f.type === "category")
+      .map((f) => f.name.toLowerCase());
+    this.wiltService.getAllWilts(tags, categories).subscribe((data) => {
+      this.loading = false;
+      this.wilts = data;
+      this.backupWilts = this.wilts;
+    }, this.handleNetworkError);
   }
-  const tags = this.filters.filter(f => f.type === 'tags').map(f => f.name.toLowerCase());
-  const categories = this.filters.filter(f => f.type === 'category').map(f => f.name.toLowerCase());
-  this.wiltService.getAllWilts(tags, categories)
-  .subscribe((data) => {
-    this.loading = false;
-    this.wilts = data;
-    this.backupWilts = this.wilts;
-  }, this.handleNetworkError);
-  }
- 
+
   removeImage(index) {
     this.visualUrls.splice(index, 1);
     this.createForm.controls["visuals"].reset();
@@ -169,11 +185,13 @@ export class WiltHomeComponent implements OnInit {
   }
 
   search(event) {
-    this.wilts = this.backupWilts.filter(wilt => {
-      return wilt.compact.toLowerCase().includes(event.target.value.toLowerCase()) ||
-      wilt.lengthy.toLowerCase().includes(event.target.value.toLowerCase()) ||
-      wilt.tags.join(',').includes(event.target.value);
-    })
+    this.wilts = this.backupWilts.filter((wilt) => {
+      return (
+        wilt.compact.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        wilt.lengthy.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        wilt.tags.join(",").includes(event.target.value)
+      );
+    });
   }
 
   trackWilt(item, index) {

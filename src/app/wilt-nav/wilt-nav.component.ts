@@ -1,34 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import {NavService} from '../services/nav.service';
-import { UserService } from '../services/user.service';
+import { Component, OnInit } from "@angular/core";
+import {
+  Router,
+  Event,
+  NavigationStart,
+  NavigationEnd,
+  NavigationError,
+} from "@angular/router";
+import { NavService } from "../services/nav.service";
+import { UserService } from "../services/user.service";
 
 @Component({
-  selector: 'app-wilt-nav',
-  templateUrl: './wilt-nav.component.html',
-  styleUrls: ['./wilt-nav.component.scss']
+  selector: "app-wilt-nav",
+  templateUrl: "./wilt-nav.component.html",
+  styleUrls: ["./wilt-nav.component.scss"],
 })
 export class WiltNavComponent implements OnInit {
   isLoggedIn: boolean;
-  currentRoute = '/home';
-  constructor( public nav: NavService, private userService: UserService, private router: Router) {}
+  currentRoute = "/home";
+  constructor(
+    public nav: NavService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.currentRoute = this.router.url
-    }
-    })
-    this.userService.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+        this.currentRoute = this.router.url;
+      }
+    });
+    this.userService.isLoggedIn.subscribe(
+      (isLoggedIn) => (this.isLoggedIn = isLoggedIn)
+    );
   }
 
   logout() {
-    this.userService.logout()
-    .subscribe(_data => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      this.userService.setLoggedIn(false);
-    })
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    this.userService.logout();
   }
-
 }

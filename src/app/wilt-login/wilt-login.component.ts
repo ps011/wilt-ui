@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavService } from '../services/nav.service';
@@ -9,17 +9,22 @@ import { UserService } from '../services/user.service';
   templateUrl: './wilt-login.component.html',
   styleUrls: ['./wilt-login.component.scss']
 })
-export class WiltLoginComponent implements OnInit {
+export class WiltLoginComponent implements OnInit, OnDestroy {
   loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
   })
   loading: boolean;
   alerts = [];
+  isLoggedInSubscription;
   constructor(private userService: UserService, private router: Router) { }
+  ngOnDestroy(): void {
+    this.isLoggedInSubscription.unsubscribe();
+  }
 
   ngOnInit() {
-    this.userService.isLoggedIn.subscribe(isLoggedIn => {
+    this.isLoggedInSubscription = this.userService.isLoggedIn.subscribe(isLoggedIn => {
+      console.log('====Login Component', isLoggedIn);
       if (isLoggedIn) {
         this.router.navigateByUrl('/home');
       } else if (localStorage.getItem('token')){
@@ -27,9 +32,6 @@ export class WiltLoginComponent implements OnInit {
         .subscribe(data => {
           this.userService.setLoggedIn(true);
         });
-      } else {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
       }
     });
   }
