@@ -115,6 +115,9 @@
       </div>
     </div>
   </div>
+  <div class="text-center">
+    <a *ngIf="self" (click)="deleteAccount()" class="btn btn-danger btn-round btn-lg">Delete Account</a>
+  </div>
 </div>
 <app-loader *ngIf="loading"></app-loader>
 <app-notification [alerts]="alerts"></app-notification>

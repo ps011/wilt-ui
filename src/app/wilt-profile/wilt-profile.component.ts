@@ -143,6 +143,13 @@ export class WiltProfileComponent implements OnInit {
     }
 }
 
+deleteAccount() {
+ this.userService.deleteAccount(this.userId)
+ .subscribe(data => {
+  this.router.navigateByUrl('/login');
+ });
+}
+
 isFollowing() {
   return this.user.followers.indexOf(this.userId) > -1
 }
