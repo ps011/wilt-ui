@@ -17,15 +17,15 @@
       <p class="category" [contentEditable]="self" (blur)="onTextFieldChanged($event, 'headline')">{{ user?.headline }}</p>
       <div class="content">
         <div class="social-description">
-          <h2>{{ user?.saved_wilts.length }}</h2>
+          <h2>{{ user?.wilts?.length }}</h2>
           <p>WILTS</p>
         </div>
         <div class="social-description">
-          <h2>{{ user?.followers.length }}</h2>
+          <h2>{{ user?.followers?.length }}</h2>
           <p>Followers</p>
         </div>
         <div class="social-description">
-          <h2>{{ user?.following.length }}</h2>
+          <h2>{{ user?.following?.length }}</h2>
           <p>Following</p>
         </div>
       </div>
@@ -47,43 +47,36 @@
       <div class="row">
         <div class="col-md-6 ml-auto mr-auto">
           <h4 class="title text-center">{{user?.name}}'s WILTs</h4>
-          <div class="nav-align-center">
+          <!-- <div class="nav-align-center">
             <ul class="nav nav-pills nav-pills-primary nav-pills-just-icons" role="tablist">
               <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#profile" role="tablist">
+                <a class="nav-link" data-toggle="tab" href="#wilts" role="tablist">
                   <i class="now-ui-icons design_image"></i>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#home" role="tablist">
+                <a class="nav-link active" data-toggle="tab" href="#saved" role="tablist">
                   <i class="now-ui-icons location_world"></i>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#messages" role="tablist">
-                  <i class="now-ui-icons sport_user-run"></i>
-                </a>
-              </li>
             </ul>
-          </div>
+          </div> -->
         </div>
         <!-- Tab panes -->
         <div class="tab-content gallery">
-          <div class="tab-pane active" id="home" role="tabpanel">
+          <div class="tab-pane active" id="wilts" role="tabpanel">
             <div class="col-md-10 ml-auto mr-auto">
               <div class="row collections">
-                <div class="col-md-6">
-                  <img src="assets/img/bg1.jpg" alt="" class="img-raised">
-                  <img src="assets/img/bg3.jpg" alt="" class="img-raised">
-                </div>
-                <div class="col-md-6">
-                  <img src="assets/img/bg8.jpg" alt="" class="img-raised">
-                  <img src="assets/img/bg7.jpg" alt="" class="img-raised">
+                <div class="col-md-6" *ngFor="let wilt of user?.wilts; let i = index">
+                  <app-wilt-card 
+                  [item]="wilt" 
+                  [i]="i"
+                  [saved]="isWiltSaved(wilt._id)"></app-wilt-card>
                 </div>
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="profile" role="tabpanel">
+          <!-- <div class="tab-pane" id="saved" role="tabpanel">
             <div class="col-md-10 ml-auto mr-auto">
               <div class="row collections">
                 <div class="col-md-6">
@@ -96,21 +89,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="tab-pane" id="messages" role="tabpanel">
-            <div class="col-md-10 ml-auto mr-auto">
-              <div class="row collections">
-                <div class="col-md-6">
-                  <img src="assets/img/bg3.jpg" alt="" class="img-raised">
-                  <img src="assets/img/bg8.jpg" alt="" class="img-raised">
-                </div>
-                <div class="col-md-6">
-                  <img src="assets/img/bg7.jpg" alt="" class="img-raised">
-                  <img src="assets/img/bg6.jpg" class="img-raised">
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

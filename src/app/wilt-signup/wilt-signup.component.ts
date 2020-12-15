@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavService } from '../services/nav.service';
 import { UserService } from '../services/user.service';
@@ -11,10 +11,10 @@ import { UserService } from '../services/user.service';
 })
 export class WiltSignupComponent implements OnInit {
   signupForm = new FormGroup({
-    name: new FormControl(''),
-    email: new FormControl(''),
-    username: new FormControl(''),
-    password: new FormControl(''),
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
     mobile: new FormControl('')
   })
   loading: boolean;
@@ -25,13 +25,14 @@ export class WiltSignupComponent implements OnInit {
   }
 
   onSignup() {
+    if (this.signupForm.valid) {
     this.loading = true;
     this.userService.createUser(this.signupForm.value)
     .subscribe(data => {
       this.loading = false;
       // Do something here, save JWT
-      this.navService.login();
-      this.router.navigateByUrl('/home');
+      // this.navService.login();
+      this.router.navigateByUrl('/login');
     }, error => {
       if (error.status === 401) {
       this.alerts.push({
@@ -50,6 +51,40 @@ export class WiltSignupComponent implements OnInit {
       }
         this.loading = false;
     })
+  } else {
+    if (this.signupForm.value.name === '') {
+      this.alerts.push({
+        type: 'warning',
+        strong: 'Uh Oh! You are forgetting something',
+        message: 'It\'s your name buddy',
+        icon: 'ui-1_bell-53'
+    })
+    }
+    if (this.signupForm.value.email === '') {
+      this.alerts.push({
+        type: 'warning',
+        strong: 'Uh Oh! You are forgetting something',
+        message: 'It\'s your email buddy',
+        icon: 'ui-1_bell-53'
+    })
+    }
+    if (this.signupForm.value.username === '') {
+      this.alerts.push({
+        type: 'warning',
+        strong: 'Uh Oh! You are forgetting something',
+        message: 'It\'s your username buddy',
+        icon: 'ui-1_bell-53'
+    })
+    }
+    if (this.signupForm.value.password === '') {
+      this.alerts.push({
+        type: 'warning',
+        strong: 'Uh Oh! You are forgetting something',
+        message: 'It\'s your password buddy',
+        icon: 'ui-1_bell-53'
+    })
+    }
+  }
   }
 
 }

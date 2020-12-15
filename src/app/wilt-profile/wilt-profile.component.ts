@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { UserService } from "../services/user.service";
 import { WiltService } from "../services/wilt.service";
 import { Location } from "@angular/common";
+import { User } from "../interfaces/user.interface";
 
 @Component({
   selector: "app-wilt-profile",
@@ -11,7 +12,7 @@ import { Location } from "@angular/common";
 })
 export class WiltProfileComponent implements OnInit {
   loading: boolean;
-  user: any;
+  user: User;
   self = true;
   blocked: boolean;
   alerts = [];
@@ -49,7 +50,7 @@ export class WiltProfileComponent implements OnInit {
         }
       } else {
         this.loading = true;
-        this.userService.getUserDetails(this.userId).subscribe((user) => {
+        this.userService.getUserDetails(this.userId).subscribe((user: User[]) => {
           this.loading = false;
           if (user["profile_image"] === "") {
             user["profile_image"] = "assets/img/default-avatar.png";
@@ -58,7 +59,7 @@ export class WiltProfileComponent implements OnInit {
             user["about"] =
               "Uh Oh! We know nothing about you. Tell us something interesting !!";
           }
-          this.user = user;
+          this.user = user[0];
         });
       }
     });
@@ -142,6 +143,10 @@ export class WiltProfileComponent implements OnInit {
     }
   }
 
+  isWiltSaved(id) {
+    return this.user.saved_wilts.indexOf(id) > -1;
+  }
+
   deleteAccount() {
     this.userService.deleteAccount(this.userId).subscribe((data) => {
       this.router.navigateByUrl("/login");
@@ -168,7 +173,7 @@ export class WiltProfileComponent implements OnInit {
           reader.addEventListener(
             "load",
             () => {
-              this.user["profile_image"] = reader.result;
+              this.user.profile_image = reader.result;
             },
             false
           );

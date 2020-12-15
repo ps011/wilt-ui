@@ -124,6 +124,13 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
           this.createForm.reset();
           this.modalService.dismissAll();
         }, this.handleNetworkError);
+    } else {
+      this.alerts.push({
+        type: "danger",
+        strong: "Oops!",
+        message: "You either missed the category or the compact",
+        icon: "objects_support-17",
+      });
     }
   }
 
