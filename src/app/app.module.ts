@@ -34,7 +34,7 @@ import { WiltCardComponent } from './wilt-card/wilt-card.component';
     WiltCardComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
