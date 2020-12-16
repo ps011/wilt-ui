@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "../services/user.service";
 import { WiltService } from "../services/wilt.service";
-import { Location } from "@angular/common";
 import { User } from "../interfaces/user.interface";
 
 @Component({
@@ -12,7 +11,9 @@ import { User } from "../interfaces/user.interface";
 })
 export class WiltProfileComponent implements OnInit {
   loading: boolean;
-  user: User;
+  user: User = {
+    profile_image: 'assets/img/default-avatar.png'
+  } as any;
   self = true;
   blocked: boolean;
   alerts = [];
@@ -20,8 +21,7 @@ export class WiltProfileComponent implements OnInit {
   constructor(
     public userService: UserService,
     private wiltService: WiltService,
-    private router: Router,
-    private location: Location
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -52,11 +52,11 @@ export class WiltProfileComponent implements OnInit {
         this.loading = true;
         this.userService.getUserDetails(this.userId).subscribe((user: User[]) => {
           this.loading = false;
-          if (user["profile_image"] === "") {
-            user["profile_image"] = "assets/img/default-avatar.png";
+          if (user[0]["profile_image"] === "") {
+            user[0]["profile_image"] = "assets/img/default-avatar.png";
           }
-          if (!user["about"] || user["about"] === "") {
-            user["about"] =
+          if (!user[0]["about"] || user[0]["about"] === "") {
+            user[0]["about"] =
               "Uh Oh! We know nothing about you. Tell us something interesting !!";
           }
           this.user = user[0];
