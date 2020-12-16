@@ -12,8 +12,8 @@
   </div>
 </div>
 
-<div class="row m-2">
-  <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let item of wilts; let i = index; trackBy: trackWilt">
+<div class="row m-auto container">
+  <div class="col-lg-6 col-md-12 col-sm-12" *ngFor="let item of wilts; let i = index; trackBy: trackWilt">
     <app-wilt-card 
     [item]="item" 
     [i]="i"
