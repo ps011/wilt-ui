@@ -29,8 +29,8 @@ export class WiltNavComponent implements OnInit {
         this.currentRoute = this.router.url;
       }
     });
-    this.userService.isLoggedIn.subscribe(
-      (isLoggedIn) => (this.isLoggedIn = isLoggedIn)
+    this.userService.user.subscribe(
+      (isLoggedIn) => (this.isLoggedIn = !!isLoggedIn)
     );
   }
 
@@ -38,5 +38,6 @@ export class WiltNavComponent implements OnInit {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     this.userService.logout();
+    this.router.navigateByUrl('/login');
   }
 }

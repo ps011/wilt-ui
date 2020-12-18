@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg bg-primary" *ngIf="isLoggedIn">
+<nav class="navbar navbar-expand-lg bg-primary">
   <div class="container">
     <div class="navbar-translate">
-      <a class="navbar-brand" href="#pablo">W I L T</a>
+      <a class="navbar-brand" href="/">W I L T</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#example-navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar bar1"></span>
         <span class="navbar-toggler-bar bar2"></span>
@@ -17,16 +17,22 @@
             <p>Discover</p>
           </a>
         </li>
-        <li class="nav-item" [ngClass]="{'active': currentRoute === '/profile'}">
+        <li class="nav-item" [ngClass]="{'active': currentRoute === '/profile'}" *ngIf="isLoggedIn">
           <a class="nav-link" routerLink="/profile">
             <i class="now-ui-icons users_circle-08"></i>
             <p>Profile</p>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isLoggedIn">
           <a class="nav-link" (click)="logout()">
             <i class="now-ui-icons media-1_button-power"></i>
             <p>Logout</p>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn && currentRoute !== '/login'">
+          <a class="nav-link" routerLink="/login">
+            <i class="now-ui-icons media-1_button-power"></i>
+            <p>Login and Create WILT</p>
           </a>
         </li>
       </ul>

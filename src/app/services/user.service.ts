@@ -7,9 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn = new BehaviorSubject(false);
   savedWilts = new BehaviorSubject([]);
-  user =  new BehaviorSubject({});
+  user =  new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   login(credentials) {
@@ -85,8 +84,7 @@ export class UserService {
   }
 
   logout() {
-    this.setLoggedIn(false);
-    this.setUser({});
+    this.setUser(null);
     return this.http.get(`${environment.BASE_URL}/users/logout`)
   }
 
@@ -95,10 +93,6 @@ export class UserService {
       userId: localStorage.getItem('userId'),
       wiltId: wilt._id
     })
-  }
-
-  setLoggedIn(isLoggedIn) {
-    this.isLoggedIn.next(isLoggedIn);
   }
 
   setSavedWilts(wilts) {

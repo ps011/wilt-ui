@@ -28,7 +28,7 @@ export class WiltCardComponent implements OnInit {
       this.i = 1;
       this.activatedRoute.params
       .subscribe(params => {
-        this.wiltService.getWiltDetails(params.id)
+        this.wiltService.getWiltDetails(params.slug)
         .subscribe(data => {
           this.item = data;
         });

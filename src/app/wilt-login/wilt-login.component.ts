@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { User } from "../interfaces/user.interface";
 import { NavService } from "../services/nav.service";
 import { UserService } from "../services/user.service";
 
@@ -23,15 +24,15 @@ export class WiltLoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoggedInSubscription = this.userService.isLoggedIn.subscribe(
-      (isLoggedIn) => {
-        if (isLoggedIn) {
+    this.isLoggedInSubscription = this.userService.user.subscribe(
+      (user: User) => {
+        if (user) {
           this.router.navigateByUrl("/home");
         } else if (localStorage.getItem("token")) {
           this.userService
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe((data) => {
-              this.userService.setLoggedIn(true);
+              this.userService.setUser(data);
             });
         }
       }
@@ -56,7 +57,6 @@ export class WiltLoginComponent implements OnInit, OnDestroy {
         this.loading = false;
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.user._id);
-        this.userService.setLoggedIn(true);
         this.userService.setUser(data.user);
       },
       (error) => {

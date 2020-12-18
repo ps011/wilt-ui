@@ -61,8 +61,15 @@
           <button class="btn btn-danger btn-round" [ngClass]="{'btn-simple': !saved}"
             (click)="onSaveWilt($event, item)">
             <i class="now-ui-icons ui-2_favourite-28"></i> Save</button></div>
-        <div class="text-center mx-sm-2"><button class="btn btn-info btn-round" (click)="onShareWilt()"><i class="now-ui-icons ui-1_send"></i>
-            Share</button></div>
+        <div class="text-center mx-sm-2">
+          <a 
+          class="btn btn-info btn-round" 
+          href="{{ '/wilt/' + item.slug}}" target="_blank" 
+          (click)="onShareWilt()">
+          <i class="now-ui-icons ui-1_send"></i>
+            Share
+          </a>
+        </div>
       </div>
     </div>
   </div>

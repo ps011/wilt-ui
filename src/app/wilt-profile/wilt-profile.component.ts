@@ -33,15 +33,14 @@ export class WiltProfileComponent implements OnInit {
       this.self = false;
       this.userId = urlSegments[urlSegments.length - 1];
     }
-    this.userService.isLoggedIn.subscribe((isLoggedIn) => {
-      if (!isLoggedIn) {
+    this.userService.user.subscribe((user) => {
+      if (!user) {
         if (localStorage.getItem("token")) {
           this.userService
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe(
               (data) => {
                 this.userService.setUser(data);
-                this.userService.setLoggedIn(true);
               },
               (error) => this.handleNetworkError(error)
             );

@@ -28,7 +28,7 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
   alerts = [];
   categories = [];
   filters = [];
-  loggedInSubscription;
+  userSubscription;
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -36,34 +36,28 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
   ngOnDestroy(): void {
-    this.loggedInSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   ngOnInit() {
-    this.loggedInSubscription = this.userService.isLoggedIn.subscribe((isLoggedIn) => {
-      if (!isLoggedIn) {
+    this.userSubscription = this.userService.user.subscribe((user) => {
+      if (!user) {
         if (localStorage.getItem("token") !== null) {
           this.userService
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe(
               (data) => {
                 this.userService.setUser(data);
-                this.userService.setLoggedIn(true);
                 this.savedWilts = data["saved_wilts"];
               },
               (error) => {
                 this.userService.logout();
-                this.router.navigateByUrl("login");
+                this.userService.setUser(null);
               }
             );
-        } else {
-          return this.router.navigateByUrl("login");
         }
-      } else {
+      }
         this.loading = true;
-        if (this.savedWilts.length === 0) {
-          this.savedWilts = this.userService.user.value["saved_wilts"];
-        }
         this.wiltService.getAllWilts(null, null).subscribe((data) => {
           this.loading = false;
           this.wilts = data;
@@ -75,7 +69,6 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
             (categories: any) => (this.categories = categories),
             this.handleNetworkError
           );
-      }
     });
   }
 
