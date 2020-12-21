@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { WiltService } from "../services/wilt.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -20,15 +20,17 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
   });
   loading: boolean;
   uploading: boolean;
-  closeResult: string;
   visualUrls = [];
-  wilts: any;
-  backupWilts: any;
+  wilts = [];
+  backupWilts = [];
   savedWilts = [];
   alerts = [];
   categories = [];
   filters = [];
   userSubscription;
+  isLoggedIn: boolean;
+  page = 1;
+  totalPages = 1;
   constructor(
     private wiltService: WiltService,
     private modalService: NgbModal,
@@ -47,40 +49,44 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
             .validateToken(`Bearer ${localStorage.getItem("token")}`)
             .subscribe(
               (data) => {
+                this.isLoggedIn = true;
                 this.userService.setUser(data);
                 this.savedWilts = data["saved_wilts"];
               },
               (error) => {
-                this.userService.logout();
-                this.userService.setUser(null);
+                this.isLoggedIn = false;
+                localStorage.removeItem("token");
               }
             );
         }
+      } else {
+        this.isLoggedIn = true;
       }
-        this.loading = true;
-        this.wiltService.getAllWilts(null, null).subscribe((data) => {
-          this.loading = false;
-          this.wilts = data;
-          this.backupWilts = this.wilts;
-        }, this.handleNetworkError);
-        this.wiltService
-          .getCategories()
-          .subscribe(
-            (categories: any) => (this.categories = categories),
-            this.handleNetworkError
-          );
     });
+    this.getWilts();
+    this.wiltService
+      .getCategories()
+      .subscribe(
+        (categories: any) => (this.categories = categories),
+        this.handleNetworkError
+      );
+  }
+
+  getWilts() {
+    this.loading = true;
+    this.wiltService
+      .getAllWilts(null, null, this.page)
+      .subscribe((data: any) => {
+        this.totalPages = data.totalPages;
+        this.wilts.push(...data.docs);
+        this.backupWilts.push(...this.wilts);
+        this.loading = false;
+        console.log(this.wilts);
+      }, this.handleNetworkError);
   }
 
   openModal(content) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
+    this.modalService.open(content);
   }
 
   isWiltSaved(id) {
@@ -148,11 +154,13 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
     const categories = this.filters
       .filter((f) => f.type === "category")
       .map((f) => f.name.toLowerCase());
-    this.wiltService.getAllWilts(tags, categories).subscribe((data) => {
-      this.loading = false;
-      this.wilts = data;
-      this.backupWilts = this.wilts;
-    }, this.handleNetworkError);
+    this.wiltService
+      .getAllWilts(tags, categories, this.page)
+      .subscribe((data: any) => {
+        this.loading = false;
+        this.wilts = data.docs;
+        this.backupWilts = this.wilts;
+      }, this.handleNetworkError);
   }
 
   removeImage(index) {
@@ -196,5 +204,14 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
 
   trackWilt(item, index) {
     return item._id;
+  }
+
+  @HostListener("window:scroll", [])
+  loadMore(): void {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      this.page++;
+      if (this.page <= this.totalPages) 
+      this.getWilts();
+    }
   }
 }

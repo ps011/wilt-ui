@@ -12,15 +12,17 @@ export class WiltService {
     return this.http.post(`${environment.BASE_URL}/wilt/create`, wilt);
   }
 
-  getAllWilts(tags, categories) {
+  getAllWilts(tags, categories, page) {
     let params = new HttpParams();
+    params = params.append('page', page);
+    params = params.append('limit', '20');
     if (tags) {
     params = params.append('tags', tags);
     }
     if (categories) {
     params = params.append('category', categories);
     }
-    return this.http.get(`${environment.BASE_URL}/wilt/`, {params});
+    return this.http.get(`${environment.BASE_URL}/wilt`, {params});
   }
 
   getWiltDetails(id) {

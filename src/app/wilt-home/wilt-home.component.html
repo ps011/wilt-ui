@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="fab-btn">
+<div class="fab-btn" *ngIf="isLoggedIn">
   <button class="btn btn-primary btn-icon btn-round btn-lg" (click)="openModal(create)" type="button">
     <i class="now-ui-icons ui-1_simple-add"></i>
   </button>

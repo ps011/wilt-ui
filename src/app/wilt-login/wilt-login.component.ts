@@ -29,11 +29,11 @@ export class WiltLoginComponent implements OnInit, OnDestroy {
         if (user) {
           this.router.navigateByUrl("/home");
         } else if (localStorage.getItem("token")) {
-          this.userService
-            .validateToken(`Bearer ${localStorage.getItem("token")}`)
-            .subscribe((data) => {
-              this.userService.setUser(data);
-            });
+          // this.userService
+          //   .validateToken(`Bearer ${localStorage.getItem("token")}`)
+          //   .subscribe((data) => {
+          //     this.userService.setUser(data);
+          //   });
         }
       }
     );
