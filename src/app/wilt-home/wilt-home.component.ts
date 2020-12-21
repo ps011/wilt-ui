@@ -63,7 +63,7 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
         this.isLoggedIn = true;
       }
     });
-    this.getWilts();
+    this.getWilts("initial");
     this.wiltService
       .getCategories()
       .subscribe(
@@ -72,16 +72,28 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  getWilts() {
+  getWilts(reason) {
     this.loading = true;
+    const tags = this.filters
+      .filter((f) => f.type === "tags")
+      .map((f) => f.name.toLowerCase());
+    const categories = this.filters
+      .filter((f) => f.type === "category")
+      .map((f) => f.name.toLowerCase());
     this.wiltService
-      .getAllWilts(null, null, this.page)
+      .getAllWilts(tags, categories, this.page)
       .subscribe((data: any) => {
+        if (reason === "bottom" || "initial") {
+          this.wilts.push(...data.docs);
+          this.backupWilts.push(...this.wilts);
+        }
+        if (reason === "filter-applied") {
+          this.wilts = data.docs;
+          this.backupWilts = this.wilts;
+          this.page = 1;
+        }
         this.totalPages = data.totalPages;
-        this.wilts.push(...data.docs);
-        this.backupWilts.push(...this.wilts);
         this.loading = false;
-        console.log(this.wilts);
       }, this.handleNetworkError);
   }
 
@@ -148,19 +160,7 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
         1
       );
     }
-    const tags = this.filters
-      .filter((f) => f.type === "tags")
-      .map((f) => f.name.toLowerCase());
-    const categories = this.filters
-      .filter((f) => f.type === "category")
-      .map((f) => f.name.toLowerCase());
-    this.wiltService
-      .getAllWilts(tags, categories, this.page)
-      .subscribe((data: any) => {
-        this.loading = false;
-        this.wilts = data.docs;
-        this.backupWilts = this.wilts;
-      }, this.handleNetworkError);
+    this.getWilts("filter-applied");
   }
 
   removeImage(index) {
@@ -210,8 +210,7 @@ export class WiltHomeComponent implements OnInit, OnDestroy {
   loadMore(): void {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       this.page++;
-      if (this.page <= this.totalPages) 
-      this.getWilts();
+      if (this.page <= this.totalPages) this.getWilts("bottom");
     }
   }
 }
